@@ -47,8 +47,8 @@ public class EnumTypes
     //PlayerTypes
     public static class PlayerType
     {
-        public static int Pacman = 0;
-        public static int Ghost = 1;
+        //public static int Pacman = 0;
+        //public static int Ghost = 1;
     }
 }
 
