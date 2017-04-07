@@ -44,7 +44,7 @@ public class ExitCube : CubeBehaviour {
 		
 	}
 
-    public void OnTriggerEnter2D(Collider col)
+    public void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag.Equals("Player"))
         {
@@ -75,7 +75,7 @@ public class ExitCube : CubeBehaviour {
         }
     }
 
-    public void OnTriggerExit2D(Collider col)
+    public void OnTriggerExit2D(Collider2D col)
     {
         if (col.gameObject.tag.Equals("Player"))
         {
