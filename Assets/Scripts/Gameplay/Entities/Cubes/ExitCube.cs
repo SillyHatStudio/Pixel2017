@@ -27,7 +27,7 @@ public class ExitCube : CubeBehaviour {
         base.Awake();
         m_CanColor = false;
         m_CurrentNumberOfPlayersInside = 0;
-        m_Visual.layer = LayerMask.NameToLayer("ExitZone");
+        m_Visual.layer = LayerMask.NameToLayer("Exit");
     }
 
     // Update is called once per frame
