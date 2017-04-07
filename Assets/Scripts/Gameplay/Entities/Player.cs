@@ -3,7 +3,7 @@ using System.Collections;
 using InControl;
 using System.Collections.Generic;
 
-//[RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
+[RequireComponent(typeof(LineRenderer))]
 public class Player : Entity
 {
     public InputDevice Device { get; set; }
@@ -13,7 +13,7 @@ public class Player : Entity
 
     //ref
     public GameObject m_Visual;
-    public GameObject m_Target;
+    public GameObject m_CrossHair;
 
     private bool m_RightStickWasPressed = false;
     private float m_BumpingMinimumTime = .2f;
@@ -21,10 +21,23 @@ public class Player : Entity
 
     private GameObject m_LastExitZoneEntered = null;
 
+    private LineRenderer m_SightLineRenderer;
+    public Color sightLineColor;
+    public float sightLineWidth;
+    private float maxSightLineDistance = 20f;
+    private Vector2 m_SightLineEnd;
+    private Vector2 m_PlayerToCrossHair;
+
     protected virtual void Awake()
     {
         m_PlayerNumber = EnumTypes.PlayerEnum.Unassigned;
         m_Rigidbody = GetComponent<Rigidbody2D>();
+        m_SightLineRenderer = GetComponent<LineRenderer>();
+        m_SightLineRenderer.startWidth = sightLineWidth;
+        m_SightLineRenderer.endWidth = sightLineWidth;
+        m_SightLineRenderer.startColor = sightLineColor;
+        m_SightLineRenderer.endColor = sightLineColor;
+
     }
 
     protected virtual void Start()
@@ -69,27 +82,53 @@ public class Player : Entity
             m_BumpingMinimumTimer = m_BumpingMinimumTime;
 
             float angle = Device.RightStick.Angle;
+
+            CheckLineOfSight();
             if (angle >= 315 || angle < 45)
             {
-                CheckIfCanMove(m_Target.transform.position + Vector3.up);
+                CheckIfCanMove(m_CrossHair.transform.position + Vector3.up);
             }
             else if (angle < 135)
             {
-                CheckIfCanMove(m_Target.transform.position + Vector3.right);
+                CheckIfCanMove(m_CrossHair.transform.position + Vector3.right);
             }
             else if (angle < 225)
             {
-                CheckIfCanMove(m_Target.transform.position + Vector3.down);
+                CheckIfCanMove(m_CrossHair.transform.position + Vector3.down);
             }
             else if (angle < 315)
             {
-                CheckIfCanMove(m_Target.transform.position + Vector3.left);
+                CheckIfCanMove(m_CrossHair.transform.position + Vector3.left);
             }
         }
 
         if (Device.RightTrigger.WasPressed)//hit trigger and cast a cross on the game
         {
             CastCross();
+        }
+    }
+
+    private void CheckLineOfSight()
+    {
+        m_PlayerToCrossHair = new Vector2(m_CrossHair.transform.position.x - transform.position.x, m_CrossHair.transform.position.y - transform.position.y);
+
+        m_SightLineRenderer.SetPosition(0, (Vector2)transform.position);
+
+        //Check for any obstacles between the caster and the wall
+        RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + m_PlayerToCrossHair * (transform.localScale.x / 2f), m_PlayerToCrossHair, maxSightLineDistance);
+        if (hit)
+        {
+            Debug.Log("Line of sight hit obstacle");
+            var obstacle = hit.collider.gameObject;
+
+            var pointVec = new Vector2(hit.point.x, hit.point.y);
+            Debug.DrawRay((Vector2)transform.position, pointVec - (Vector2)transform.position, Color.red);
+
+            m_SightLineRenderer.SetPosition(1, pointVec);
+        }
+        else
+        {
+            Debug.DrawRay((Vector2)transform.position, new Vector2(hit.point.x, hit.point.y) - (Vector2)transform.position, Color.blue);
         }
     }
 
@@ -102,7 +141,7 @@ public class Player : Entity
         {
             if (collider[i].GetComponent<CubeBehaviour>())
             {
-                m_Target.transform.position = collider[i].transform.position;
+                m_CrossHair.transform.position = collider[i].transform.position;
 
             }
             else
@@ -136,18 +175,18 @@ public class Player : Entity
                     m_LastExitZoneEntered.GetComponent<ExitCube>().CheckPlayerCollisionOut(gameObject);
                     m_LastExitZoneEntered = null;
                 }
-                    
+
             }
         }
     }
 
     private void CastCross()
     {
-        CastBox(m_Target.transform.position);
-        CastBox(m_Target.transform.position + Vector3.up);
-        CastBox(m_Target.transform.position + Vector3.left);
-        CastBox(m_Target.transform.position + Vector3.down);
-        CastBox(m_Target.transform.position + Vector3.right);
+        CastBox(m_CrossHair.transform.position);
+        CastBox(m_CrossHair.transform.position + Vector3.up);
+        CastBox(m_CrossHair.transform.position + Vector3.left);
+        CastBox(m_CrossHair.transform.position + Vector3.down);
+        CastBox(m_CrossHair.transform.position + Vector3.right);
     }
 
     private void CastBox(Vector2 _position)
