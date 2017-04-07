@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     private GameState CurrentState { get; set; }
 
     // Player related members:
-    private const int MAX_PLAYERS__ = 4;
+    private const int MAX_PLAYERS__ = 2;
     private List<Player> m_players = new List<Player>(MAX_PLAYERS__);
     public GameObject m_PlayerPrefab;
     bool m_LockPlayersInput = true;

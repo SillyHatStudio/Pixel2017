@@ -9,6 +9,7 @@ public class Player : Entity
     private EnumTypes.PlayerEnum m_PlayerNumber;
     private Rigidbody2D m_Rigidbody;
     public float Speed;
+    public GameObject m_Target;
     private float m_BaseSpeed = 100f;
     //private KeyCode m_ControlKeyUp, m_ControlKeyDown, m_ControlKeyLeft, m_ControlKeyRight;
 
@@ -24,12 +25,32 @@ public class Player : Entity
     }   
 
     void Update()
-    { 		
-    
+    {
+        Control();
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D col) { }
 
+    private void Control()
+    {
+        if (Device.LeftStick.Vector != Vector2.zero)
+        {
+            m_Rigidbody.velocity = Device.LeftStick.Vector * Time.deltaTime * Speed;
+        }
+        else
+        {
+            m_Rigidbody.velocity = m_Rigidbody.velocity *= .8f;
+        }
+
+        if (Device.RightStick.Vector != Vector2.zero)
+        {
+            m_Target.GetComponent<Rigidbody2D>().velocity = Device.RightStick.Vector * Time.deltaTime * 200;
+        }
+        else
+        {
+            m_Target.GetComponent<Rigidbody2D>().velocity = m_Target.GetComponent<Rigidbody2D>().velocity *= .8f;
+        }
+    }
 
     public void SetPlayerNumber(int number)
     {
