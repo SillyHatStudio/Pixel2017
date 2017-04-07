@@ -148,7 +148,7 @@ public class Player : Entity
         {
             if (col[i].gameObject.layer == 8 || col[i].gameObject.layer == 9 || col[i].gameObject.layer == 10)
             {
-                if (col[i].GetComponent<ExitCube>().enabled == false)
+                if (!col[i].GetComponent<ExitCube>() || col[i].GetComponent<ExitCube>().enabled == false)
                 {
                     if (col[i].GetComponent<CubeBehaviour>())
                     {
