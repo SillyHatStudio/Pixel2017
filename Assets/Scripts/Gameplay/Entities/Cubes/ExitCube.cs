@@ -7,9 +7,6 @@ public class ExitCube : CubeBehaviour {
     public int m_NumberOfPlayersRequiredInside = 1;
     private int m_CurrentNumberOfPlayersInside;
     public bool validated;
-
-    [HideInInspector]
-    public GameObject MapManager;
     
     [HideInInspector]
     public enum PlayerAuthorized
