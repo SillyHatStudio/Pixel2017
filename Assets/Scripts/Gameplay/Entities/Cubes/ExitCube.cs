@@ -28,6 +28,9 @@ public class ExitCube : CubeBehaviour {
         m_CanColor = false;
         m_CurrentNumberOfPlayersInside = 0;
         m_Visual.layer = LayerMask.NameToLayer("Exit");
+        m_IsFlippable = false;
+
+        GetComponent<BoxCollider2D>().isTrigger = true;
     }
 
     // Update is called once per frame
@@ -41,19 +44,20 @@ public class ExitCube : CubeBehaviour {
 		
 	}
 
-    public void OnCollisionEnter2D(Collision2D col)
+    public void OnTriggerEnter2D(Collider col)
     {
         if (col.gameObject.tag.Equals("Player"))
         {
             m_CurrentNumberOfPlayersInside++;
 
-            if(m_NumberOfPlayersRequiredInside == m_CurrentNumberOfPlayersInside)
+            if (m_NumberOfPlayersRequiredInside == m_CurrentNumberOfPlayersInside)
             {
 
                 //If any player inside the zone, ok 
-                if(m_PlayersThatCanGoInside == PlayerAuthorized.Any)
+                if (m_PlayersThatCanGoInside == PlayerAuthorized.Any)
                 {
                     validated = true;
+                    Debug.Log("Validated : all players are in the zone");
                 }
 
                 //If a specific player is inside the zone
@@ -63,14 +67,15 @@ public class ExitCube : CubeBehaviour {
                         || m_PlayersThatCanGoInside == PlayerAuthorized.P2 && col.gameObject.GetComponent<Player>().GetPlayerNumberEnumValue() == EnumTypes.PlayerEnum.P2)
                     {
                         validated = true;
+                        Debug.Log("Validated : specific player is in the zone");
                     }
                 }
-                
+
             }
         }
     }
 
-    public void OnCollisionExit2D(Collision2D col)
+    public void OnTriggerExit2D(Collider col)
     {
         if (col.gameObject.tag.Equals("Player"))
         {
