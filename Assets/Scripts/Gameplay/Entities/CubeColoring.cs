@@ -8,13 +8,16 @@ public class CubeColoring : MonoBehaviour {
     private EnumTypes.PlayerEnum m_OwnerNumber;
     private Color m_CurrentColor;
     private Material m_Material;
+    public GameObject m_Visual;
+    public bool m_CanColor = true;
 
     void Awake()
     {
         m_OwnerNumber = EnumTypes.PlayerEnum.Unassigned;
         m_CurrentColor = Color.gray;
 
-        m_Material = GetComponent<MeshRenderer>().material;
+        m_Material = m_Visual.GetComponent<MeshRenderer>().material;
+        m_Material.color = Color.gray;
 
     }
 
@@ -53,5 +56,32 @@ public class CubeColoring : MonoBehaviour {
     public void SetMaterialColor(Color color)
     {
         m_Material.color = color;
+
+        if(color == Color.black)
+        {
+            gameObject.layer = LayerMask.NameToLayer("Black");
+        }
+        else if (color == Color.white)
+        {
+            gameObject.layer = LayerMask.NameToLayer("White");
+        }       
+    }
+
+    public void SetMaterialColor(int _playerId)
+    {
+        Color _myColor = (_playerId == 0) ? Color.black : Color.white;
+        
+
+        m_Material.color = _myColor;
+
+        if (_myColor == Color.black)
+        {
+            gameObject.layer = LayerMask.NameToLayer("Black");
+        }
+        else if (_myColor == Color.white)
+        {
+            gameObject.layer = LayerMask.NameToLayer("White");
+        }
+
     }
 }

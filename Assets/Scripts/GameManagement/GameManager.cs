@@ -74,8 +74,13 @@ public class GameManager : MonoBehaviour
                 {
                     switch(m_Menu.GetSelectIndex())
                     {
-                        case 0: //if button 0                       
-                            SetCurrentState(GameState.Game);
+                        case 0: //if button 0  
+                            if(GameManager.GetInstance().GetCurrentPlayerCount() == 2)
+                            {                               
+                                SetCurrentState(GameState.Game);
+
+                            }
+                           
                             break;
                         case 1: //if button 1
                             Application.Quit();
@@ -149,7 +154,8 @@ public class GameManager : MonoBehaviour
 
             case GameState.Game:
                 {   
-                    SceneManager.LoadScene(1); 
+                    SceneManager.LoadScene(1);
+                    SpawnPlayersAtPosition();
                 }
                 break;
         }
@@ -208,8 +214,9 @@ public class GameManager : MonoBehaviour
 
             // retrieve player component
             Player component = player_object.GetComponent<Player>();
-            component.Device = input_device;          
-
+            component.Device = input_device;
+            component.SetPlayerNumber(m_players.Count);       
+                 
             m_players.Add(component);
 
             return component;
@@ -304,5 +311,15 @@ public class GameManager : MonoBehaviour
         }
     } 
     
+    private void SpawnPlayersAtPosition()
+    {
+        GameObject[] spawners = GameObject.FindGameObjectsWithTag("SpawnPoint");        
+        for (int i = 0; i < spawners.Length; i++)
+        {
+            GameManager.GetInstance().GetPlayerAt(i).transform.position = spawners[i].transform.position;
+        }
+
+    }
+
 
 }

@@ -12,6 +12,7 @@ public class Menu : MonoBehaviour
     public GameObject m_Button0;
     public GameObject m_Button1;
     public GameObject m_Arrow;  
+    public GameObject m_P1Ready, m_P2Ready; 
 
     public bool m_StartMenuOpen = true;
 
@@ -34,6 +35,7 @@ public class Menu : MonoBehaviour
    
     void Update()
     {
+        
         if (GameManager.GetInstance().GetCurrentPlayerCount() > 0)
         {
             if (m_PlayerReady == false)
@@ -47,6 +49,15 @@ public class Menu : MonoBehaviour
             return;
         }
 
+
+        if(GameManager.GetInstance().GetCurrentPlayerCount() > 0)
+        {
+            m_P1Ready.gameObject.SetActive(true);
+            if(GameManager.GetInstance().GetCurrentPlayerCount() > 1)
+            {
+                m_P2Ready.gameObject.SetActive(true);
+            }
+        }
 		
      
 
@@ -93,8 +104,11 @@ public class Menu : MonoBehaviour
             }
 
             if (active.Device.Action1.WasPressed)
-            {                
-                m_FadeOverlay.m_PerformFadeOut = true;				
+            {   
+                if(GameManager.GetInstance().GetCurrentPlayerCount() == 2)
+                {
+                    m_FadeOverlay.m_PerformFadeOut = true;
+                }  	
                 m_SelectIndex = m_ButtonIndex;
             }
 
@@ -108,7 +122,7 @@ public class Menu : MonoBehaviour
     }
 
     public bool IsDone()
-    {
+    {       
         return m_FadeOverlay.IsDone();
     }
 

@@ -16,6 +16,8 @@ public class CubeGridGenerator : MonoBehaviour
 
     [HideInInspector]
     public GameObject[,] cubegrid;
+    
+    public PlayerSpawnPoint[] m_PlayerSpawnPoint;
 
     private void Awake()
     {
@@ -98,6 +100,28 @@ public class CubeGridGenerator : MonoBehaviour
         
 
 
+        if(m_PlayerSpawnPoint.Length > 0)
+        {
+
+            Color ownerColor;
+
+            for (int i = 0; i < m_PlayerSpawnPoint.Length; i++)
+            {
+                ownerColor = (m_PlayerSpawnPoint[i].owner == 0) ? Color.black : Color.white;                
+                FillSpawnPointColor((int)m_PlayerSpawnPoint[i].position.x, (int)m_PlayerSpawnPoint[i].position.y, i, ownerColor);                
+            }
+        }
+    }
+
+    private void FillSpawnPointColor(int _initX, int _initY, int _playerSpawnPointIndex, Color _color)
+    {
+        for (int i = 0; i < m_PlayerSpawnPoint[_playerSpawnPointIndex].size.x ; i++)
+        {
+            for (int j = 0; j < m_PlayerSpawnPoint[_playerSpawnPointIndex].size.y; j++)
+            {
+                cubegrid[_initX + i, _initY+j].GetComponent<CubeColoring>().SetMaterialColor(_color);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -105,4 +129,13 @@ public class CubeGridGenerator : MonoBehaviour
     {
 
     }
+
+    [System.Serializable]
+    public struct PlayerSpawnPoint
+    {
+        public Vector2 position;
+        public Vector2 size;
+        public int owner;
+    }
+
 }
