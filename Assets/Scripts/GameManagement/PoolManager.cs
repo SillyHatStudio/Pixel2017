@@ -10,6 +10,7 @@ public class PoolManager : MonoBehaviour
 		public string name;
 		public GameObject[] pool;
 		GameObject parent;
+
 		public PoolInfo(string _name, GameObject _prefab, int _number, GameObject _parent)
 		{
 			name = _name;
