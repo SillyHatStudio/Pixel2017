@@ -79,38 +79,44 @@ public class LaserCaster : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(currentPosition + m_LaserDirection * (transform.localScale.x / 2f), m_LaserDirection, m_MaxProjectionDistance);
         if (hit)
         {
-            if (hit.collider.gameObject != m_LastHitObject)
+            if (hit.collider.gameObject.tag.Equals("Player"))
             {
-                var newTarget = hit.collider.gameObject;
-                Debug.Log("New object hit : " + newTarget.name);
-
-                m_LastHitObject = newTarget;
+                //TODO when a player is touched by laser kill him
             }
 
-
-            float halfScale = m_LastHitObject.transform.localScale.x / 2f;
-
-            //use y scale to move laser out of the transform if hitting from top or bottom
-            if (m_LaserDirection == Vector2.up || m_LaserDirection == Vector2.down)
+            else
             {
-                halfScale = m_LastHitObject.transform.localScale.y / 2f;
+                if (hit.collider.gameObject != m_LastHitObject)
+                {
+                    var newTarget = hit.collider.gameObject;
+                    Debug.Log("New object hit : " + newTarget.name);
+
+                    m_LastHitObject = newTarget;
+                }
+
+
+                float halfScale = m_LastHitObject.transform.localScale.x / 2f;
+
+                //use y scale to move laser out of the transform if hitting from top or bottom
+                if (m_LaserDirection == Vector2.up || m_LaserDirection == Vector2.down)
+                {
+                    halfScale = m_LastHitObject.transform.localScale.y / 2f;
+                }
+
+                Vector2 endPoint = new Vector2(m_LastHitObject.transform.position.x, m_LastHitObject.transform.position.y) - m_LaserDirection * halfScale;
+
+                //Recalculate the laser vector
+                Vector2 casterToTarget = endPoint - beginPoint;
+
+                //Project the target<-caster vector onto the direction vector
+                m_CasterToTargetProject = Vector3.Project(casterToTarget, m_LaserDirection);
+
+
+                var offsetTarget = Vector3.Project(endPoint - (Vector2)m_LastHitObject.transform.position, -m_LaserDirection);
+
+                m_EndPosition = beginPoint + m_CasterToTargetProject;
+
             }
-
-            Vector2 endPoint = new Vector2(m_LastHitObject.transform.position.x, m_LastHitObject.transform.position.y) - m_LaserDirection * halfScale;
-
-            //Recalculate the laser vector
-            Vector2 casterToTarget = endPoint - beginPoint;
-
-            //Project the target<-caster vector onto the direction vector
-            m_CasterToTargetProject = Vector3.Project(casterToTarget, m_LaserDirection);
-
-
-            var offsetTarget = Vector3.Project(endPoint - (Vector2)m_LastHitObject.transform.position, -m_LaserDirection);
-
-            m_EndPosition = beginPoint + m_CasterToTargetProject;
-
-            
-
         }
 
         else
