@@ -119,7 +119,7 @@ public class Player : Entity
 
         for (int i = 0; i < colBelow.Length; i++)
         {
-            if (colBelow[i].GetComponent<ExitCube>())
+            if (colBelow[i].GetComponent<ExitCube>() && colBelow[i].GetComponent<ExitCube>().enabled)
             {
                 m_LastExitZoneEntered = colBelow[i].gameObject;
 
