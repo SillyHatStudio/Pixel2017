@@ -23,6 +23,13 @@ public class EnumTypes
         P4 = 3
     }
 
+    //Player Colors
+    public static class PlayerColors
+    {
+        public static Color ColorP1 = Color.white;
+        public static Color ColorP2 = Color.black;
+    }
+
     //PlayerControlTypes
     public enum PlayerControlKeys
     {
