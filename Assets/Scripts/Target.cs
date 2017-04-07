@@ -21,7 +21,7 @@ public class Target : MonoBehaviour
         {
             if (col[i].GetComponent<CubeBehaviour>())
             {
-                transform.position = col[i].transform.position + new Vector3(0,0,.5f);
+                transform.position = col[i].transform.position + new Vector3(0,0,.4f);
             }
         }
 
