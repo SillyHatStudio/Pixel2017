@@ -49,6 +49,7 @@ public class ExitCube : CubeBehaviour {
         if (obj.tag.Equals("Player"))
         {
             m_CurrentNumberOfPlayersInside++;
+            Debug.Log("Player num = " + obj.GetComponent<Player>().GetPlayerNumberEnumValue());
 
             if (m_NumberOfPlayersRequiredInside == m_CurrentNumberOfPlayersInside)
             {
@@ -63,8 +64,8 @@ public class ExitCube : CubeBehaviour {
                 //If a specific player is inside the zone
                 else
                 {
-                    if (m_PlayersThatCanGoInside == PlayerAuthorized.P1 && obj.GetComponent<Player>().GetPlayerNumberEnumValue() == EnumTypes.PlayerEnum.P1
-                        || m_PlayersThatCanGoInside == PlayerAuthorized.P2 && obj.GetComponent<Player>().GetPlayerNumberEnumValue() == EnumTypes.PlayerEnum.P2)
+                    if ((m_PlayersThatCanGoInside == PlayerAuthorized.P1 && obj.GetComponent<Player>().GetPlayerNumberEnumValue() == EnumTypes.PlayerEnum.P1)
+                        || (m_PlayersThatCanGoInside == PlayerAuthorized.P2 && obj.GetComponent<Player>().GetPlayerNumberEnumValue() == EnumTypes.PlayerEnum.P2))
                     {
                         validated = true;
                         Debug.Log("Validated : specific player is in the zone (condition = "+ m_PlayersThatCanGoInside+")");
