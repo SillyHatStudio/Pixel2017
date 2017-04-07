@@ -31,8 +31,8 @@ public class Player : Entity
 
     protected virtual void Start()
     {
-        base.Start();             
-    }   
+        base.Start();
+    }
 
     void Update()
     {
@@ -69,27 +69,27 @@ public class Player : Entity
         if (Device.RightStick.Vector != Vector2.zero && m_BumpingMinimumTimer == 0)
         {
             m_BumpingMinimumTimer = m_BumpingMinimumTime;
-          
+
             float angle = Device.RightStick.Angle;
-            if(angle >= 315 || angle < 45)
+            if (angle >= 315 || angle < 45)
             {
-                CheckIfCanMove(m_Target.transform.position + Vector3.up);                
+                CheckIfCanMove(m_Target.transform.position + Vector3.up);
             }
-            else if(angle < 135)
+            else if (angle < 135)
             {
                 CheckIfCanMove(m_Target.transform.position + Vector3.right);
             }
-            else if(angle < 225)
+            else if (angle < 225)
             {
                 CheckIfCanMove(m_Target.transform.position + Vector3.down);
             }
-            else if(angle < 315)
+            else if (angle < 315)
             {
                 CheckIfCanMove(m_Target.transform.position + Vector3.left);
             }
-        }              
+        }
 
-        if(Device.RightTrigger.WasPressed)//hit trigger and cast a cross on the game
+        if (Device.RightTrigger.WasPressed)//hit trigger and cast a cross on the game
         {
             CastCross();
         }
@@ -99,13 +99,13 @@ public class Player : Entity
     private void CheckIfCanMove(Vector3 _position)
     {
         Collider2D[] collider = Physics2D.OverlapPointAll(_position);
-        
+
         for (int i = 0; i < collider.Length; i++)
-        {       
+        {
             if (collider[i].GetComponent<CubeBehaviour>())
             {
                 m_Target.transform.position = collider[i].transform.position;
-                
+
             }
             else
             {
@@ -116,7 +116,7 @@ public class Player : Entity
 
     private void CheckTypeOfFloorObject()
     {
-       /* TODO */
+        /* TODO */
     }
 
     private void CastCross()
@@ -125,7 +125,7 @@ public class Player : Entity
         CastBox(m_Target.transform.position + Vector3.up);
         CastBox(m_Target.transform.position + Vector3.left);
         CastBox(m_Target.transform.position + Vector3.down);
-        CastBox(m_Target.transform.position + Vector3.right);        
+        CastBox(m_Target.transform.position + Vector3.right);
     }
 
     private void CastBox(Vector2 _position)
@@ -134,9 +134,9 @@ public class Player : Entity
         Collider2D[] colBelow = Physics2D.OverlapPointAll(gameObject.transform.position);
         GameObject boxBelow = null;
 
-        for(int i = 0; i < colBelow.Length; i++)
+        for (int i = 0; i < colBelow.Length; i++)
         {
-            if(colBelow[i].GetComponent<CubeBehaviour>())
+            if (colBelow[i].GetComponent<CubeBehaviour>())
             {
                 colBelow[i].GetComponent<CubeBehaviour>().m_CanColor = false;
                 boxBelow = colBelow[i].gameObject;
@@ -145,50 +145,54 @@ public class Player : Entity
 
 
         for (int i = 0; i < col.Length; i++)
-        {            
+        {
             if (col[i].gameObject.layer == 8 || col[i].gameObject.layer == 9 || col[i].gameObject.layer == 10)
-            {                
-                if (col[i].GetComponent<CubeBehaviour>())
+            {
+                if (col[i].GetComponent<ExitCube>().enabled == false)
                 {
-                    if (col[i].GetComponent<CubeBehaviour>().m_CanColor)
+                    if (col[i].GetComponent<CubeBehaviour>())
                     {
-                        if (m_PlayerNumber == EnumTypes.PlayerEnum.P1)
+                        if (col[i].GetComponent<CubeBehaviour>().m_CanColor)
                         {
-                            col[i].GetComponent<CubeBehaviour>().SetMaterialColor(Color.white);
+                            if (m_PlayerNumber == EnumTypes.PlayerEnum.P1)
+                            {
+                                col[i].GetComponent<CubeBehaviour>().SetMaterialColor(Color.white);
+                            }
+                            else if (m_PlayerNumber == EnumTypes.PlayerEnum.P2)
+                            {
+                                col[i].GetComponent<CubeBehaviour>().SetMaterialColor(Color.black);
+                            }
                         }
-                        else if (m_PlayerNumber == EnumTypes.PlayerEnum.P2)
-                        {
-                            col[i].GetComponent<CubeBehaviour>().SetMaterialColor(Color.black);
-                        }
-                    }   
-                }            
-            }                           
+                    }
+                }
+
+            }
         }
 
-        if(boxBelow != null)
+        if (boxBelow != null)
         {
             boxBelow.GetComponent<CubeBehaviour>().m_CanColor = true;
         }
-        
+
     }
 
     //Set number and color
     public void SetPlayerNumber(int number)
     {
-       switch (number)
-       {
-           case 0:
+        switch (number)
+        {
+            case 0:
                 m_PlayerNumber = EnumTypes.PlayerEnum.P1;
                 m_Visual.GetComponent<MeshRenderer>().material.color = Color.black;
-                m_Visual.layer = LayerMask.NameToLayer("Black");                 
-               break;
+                m_Visual.layer = LayerMask.NameToLayer("Black");
+                break;
 
-           case 1:
-                m_PlayerNumber = EnumTypes.PlayerEnum.P2; 
+            case 1:
+                m_PlayerNumber = EnumTypes.PlayerEnum.P2;
                 m_Visual.GetComponent<MeshRenderer>().material.color = Color.white;
                 m_Visual.layer = LayerMask.NameToLayer("White");
                 break;
-       }        
+        }
     }
 
     public int GetPlayerNumber()
