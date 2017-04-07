@@ -25,7 +25,8 @@ namespace Pixel.Game.Management
         public int countDownMinutes;
         [Range(0, 59)]
         public int countDownSeconds;
-        private float remainingMins, remainingSecs, milliseconds;
+        [HideInInspector]
+        public float remainingMins, remainingSecs, milliseconds;
         private bool timerOver;
 
         private void Awake()
@@ -115,6 +116,23 @@ namespace Pixel.Game.Management
                         }
                     }
                 }
+            }
+        }
+
+        public void resetTimer()
+        {
+            if (m_timerType == EnumTypes.TimerTypeEnum.Normal)
+            {
+                elapsedMins = 0;
+                elapsedSecs = 0;
+            }
+
+            if (m_timerType == EnumTypes.TimerTypeEnum.Countdown)
+            {
+                remainingMins = countDownMinutes;
+                remainingSecs = countDownSeconds;
+                milliseconds = 100;
+                timerOver = false;
             }
         }
     }

@@ -28,6 +28,7 @@ public class EnumTypes
     {
         public static Color ColorP1 = Color.white;
         public static Color ColorP2 = Color.black;
+        public static Color ColorNone = Color.gray;
     }
 
     //PlayerControlTypes
