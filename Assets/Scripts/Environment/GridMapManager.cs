@@ -101,7 +101,6 @@ public class GridMapManager : MonoBehaviour
                 exitCube.MapManager = gameObject;
                 exitCube.m_NumberOfPlayersRequiredInside = 1;
                 exitCube.SetMaterialColor(Color.green); //tmp
-                exitCube.MapManager = gameObject;
                 exitCube.gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
 
                 if (m_WinZones[i].playerAllowed == WinZone.AllowedPlayer.Any)
