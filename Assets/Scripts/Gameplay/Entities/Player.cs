@@ -19,9 +19,7 @@ public class Player : Entity
     private float m_BumpingMinimumTime = .2f;
     private float m_BumpingMinimumTimer = 0;
 
-
-
-    //private KeyCode m_ControlKeyUp, m_ControlKeyDown, m_ControlKeyLeft, m_ControlKeyRight;
+    private GameObject m_LastExitZoneEntered = null;
 
     protected virtual void Awake()
     {
@@ -116,7 +114,31 @@ public class Player : Entity
 
     private void CheckTypeOfFloorObject()
     {
-        /* TODO */
+        Collider2D[] colBelow = Physics2D.OverlapPointAll(gameObject.transform.position);
+        GameObject boxBelow = null;
+
+        for (int i = 0; i < colBelow.Length; i++)
+        {
+            if (colBelow[i].GetComponent<ExitCube>())
+            {
+                m_LastExitZoneEntered = colBelow[i].gameObject;
+
+                m_LastExitZoneEntered.GetComponent<CubeBehaviour>().m_CanColor = false;
+                boxBelow = m_LastExitZoneEntered;
+
+                m_LastExitZoneEntered.GetComponent<ExitCube>().CheckPlayerCollisionIn(gameObject);
+            }
+
+            else
+            {
+                if (m_LastExitZoneEntered)
+                {
+                    m_LastExitZoneEntered.GetComponent<ExitCube>().CheckPlayerCollisionOut(gameObject);
+                    m_LastExitZoneEntered = null;
+                }
+                    
+            }
+        }
     }
 
     private void CastCross()

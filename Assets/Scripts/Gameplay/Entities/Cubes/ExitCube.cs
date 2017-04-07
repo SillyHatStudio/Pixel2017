@@ -44,9 +44,9 @@ public class ExitCube : CubeBehaviour {
 		
 	}
 
-    public void OnTriggerEnter2D(Collider2D col)
+    public void CheckPlayerCollisionIn(GameObject obj)
     {
-        if (col.gameObject.tag.Equals("Player"))
+        if (obj.tag.Equals("Player"))
         {
             m_CurrentNumberOfPlayersInside++;
 
@@ -57,17 +57,17 @@ public class ExitCube : CubeBehaviour {
                 if (m_PlayersThatCanGoInside == PlayerAuthorized.Any)
                 {
                     validated = true;
-                    Debug.Log("Validated : all players are in the zone");
+                    Debug.Log("Validated : all players are in the zone (condition = any)");
                 }
 
                 //If a specific player is inside the zone
                 else
                 {
-                    if (m_PlayersThatCanGoInside == PlayerAuthorized.P1 && col.gameObject.GetComponent<Player>().GetPlayerNumberEnumValue() == EnumTypes.PlayerEnum.P1
-                        || m_PlayersThatCanGoInside == PlayerAuthorized.P2 && col.gameObject.GetComponent<Player>().GetPlayerNumberEnumValue() == EnumTypes.PlayerEnum.P2)
+                    if (m_PlayersThatCanGoInside == PlayerAuthorized.P1 && obj.GetComponent<Player>().GetPlayerNumberEnumValue() == EnumTypes.PlayerEnum.P1
+                        || m_PlayersThatCanGoInside == PlayerAuthorized.P2 && obj.GetComponent<Player>().GetPlayerNumberEnumValue() == EnumTypes.PlayerEnum.P2)
                     {
                         validated = true;
-                        Debug.Log("Validated : specific player is in the zone");
+                        Debug.Log("Validated : specific player is in the zone (condition = "+ m_PlayersThatCanGoInside+")");
                     }
                 }
 
@@ -75,9 +75,9 @@ public class ExitCube : CubeBehaviour {
         }
     }
 
-    public void OnTriggerExit2D(Collider2D col)
+    public void CheckPlayerCollisionOut(GameObject obj)
     {
-        if (col.gameObject.tag.Equals("Player"))
+        if (obj.tag.Equals("Player"))
         {
             m_CurrentNumberOfPlayersInside--;
 
