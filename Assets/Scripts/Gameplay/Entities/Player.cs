@@ -38,6 +38,7 @@ public class Player : Entity
         m_SightLineRenderer.startColor = sightLineColor;
         m_SightLineRenderer.endColor = sightLineColor;
 
+
     }
 
     protected virtual void Start()
