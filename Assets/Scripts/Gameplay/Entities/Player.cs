@@ -111,26 +111,28 @@ public class Player : Entity
 
     private void CheckLineOfSight()
     {
-        m_PlayerToCrossHair = new Vector2(m_CrossHair.transform.position.x - transform.position.x, m_CrossHair.transform.position.y - transform.position.y);
+       /* m_PlayerToCrossHair = m_CrossHair.transform.position - transform.position;
 
         m_SightLineRenderer.SetPosition(0, (Vector2)transform.position);
 
+        Debug.DrawLine((Vector2)transform.position, m_CrossHair.transform.position, Color.green, 2);
+
         //Check for any obstacles between the caster and the wall
-        RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + m_PlayerToCrossHair * (transform.localScale.x / 2f), m_PlayerToCrossHair, maxSightLineDistance);
+        RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position, m_PlayerToCrossHair, maxSightLineDistance);
         if (hit)
         {
             Debug.Log("Line of sight hit obstacle");
             var obstacle = hit.collider.gameObject;
 
             var pointVec = new Vector2(hit.point.x, hit.point.y);
-            Debug.DrawRay((Vector2)transform.position, pointVec - (Vector2)transform.position, Color.red);
+            Debug.DrawRay((Vector2)transform.position, pointVec - (Vector2)transform.position, Color.red, 2);
 
             m_SightLineRenderer.SetPosition(1, pointVec);
         }
         else
         {
-            Debug.DrawRay((Vector2)transform.position, new Vector2(hit.point.x, hit.point.y) - (Vector2)transform.position, Color.blue);
-        }
+            Debug.DrawRay((Vector2)transform.position, m_PlayerToCrossHair, Color.blue, 2);
+        } */
     }
 
     //Do a raycast to a possible position to teleport the object to location
