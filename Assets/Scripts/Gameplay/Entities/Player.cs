@@ -38,6 +38,7 @@ public class Player : Entity
     {
         Control();
         BumpingCooldowmUpdate();
+        CheckTypeOfFloorObject();
     }
 
     private void BumpingCooldowmUpdate()
@@ -100,8 +101,8 @@ public class Player : Entity
         Collider2D[] collider = Physics2D.OverlapPointAll(_position);
         
         for (int i = 0; i < collider.Length; i++)
-        {            
-            if (collider[i].GetComponent<CubeColoring>())
+        {       
+            if (collider[i].GetComponent<CubeBehaviour>())
             {
                 m_Target.transform.position = collider[i].transform.position;
                 
@@ -111,6 +112,11 @@ public class Player : Entity
 
             }
         }
+    }
+
+    private void CheckTypeOfFloorObject()
+    {
+       /* TODO */
     }
 
     private void CastCross()
@@ -130,9 +136,9 @@ public class Player : Entity
 
         for(int i = 0; i < colBelow.Length; i++)
         {
-            if(colBelow[i].GetComponent<CubeColoring>())
+            if(colBelow[i].GetComponent<CubeBehaviour>())
             {
-                colBelow[i].GetComponent<CubeColoring>().m_CanColor = false;
+                colBelow[i].GetComponent<CubeBehaviour>().m_CanColor = false;
                 boxBelow = colBelow[i].gameObject;
             }
         }
@@ -142,17 +148,17 @@ public class Player : Entity
         {            
             if (col[i].gameObject.layer == 8 || col[i].gameObject.layer == 9 || col[i].gameObject.layer == 10)
             {                
-                if (col[i].GetComponent<CubeColoring>())
+                if (col[i].GetComponent<CubeBehaviour>())
                 {
-                    if (col[i].GetComponent<CubeColoring>().m_CanColor)
+                    if (col[i].GetComponent<CubeBehaviour>().m_CanColor)
                     {
                         if (m_PlayerNumber == EnumTypes.PlayerEnum.P1)
                         {
-                            col[i].GetComponent<CubeColoring>().SetMaterialColor(Color.white);
+                            col[i].GetComponent<CubeBehaviour>().SetMaterialColor(Color.white);
                         }
                         else if (m_PlayerNumber == EnumTypes.PlayerEnum.P2)
                         {
-                            col[i].GetComponent<CubeColoring>().SetMaterialColor(Color.black);
+                            col[i].GetComponent<CubeBehaviour>().SetMaterialColor(Color.black);
                         }
                     }   
                 }            
@@ -161,7 +167,7 @@ public class Player : Entity
 
         if(boxBelow != null)
         {
-            boxBelow.GetComponent<CubeColoring>().m_CanColor = true;
+            boxBelow.GetComponent<CubeBehaviour>().m_CanColor = true;
         }
         
     }
@@ -189,5 +195,11 @@ public class Player : Entity
     {
         return (int)m_PlayerNumber;
     }
+
+    public EnumTypes.PlayerEnum GetPlayerNumberEnumValue()
+    {
+        return m_PlayerNumber;
+    }
+
 
 }

@@ -19,7 +19,7 @@ public class Target : MonoBehaviour
         col = Physics2D.OverlapPointAll(gameObject.transform.position);
         for (int i = 0; i < col.Length; i++)
         {
-            if (col[i].GetComponent<CubeColoring>())
+            if (col[i].GetComponent<CubeBehaviour>())
             {
                 transform.position = col[i].transform.position + new Vector3(0,0,.5f);
             }

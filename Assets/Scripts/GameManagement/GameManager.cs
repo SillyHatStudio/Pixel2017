@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
             case GameState.SplashScreen:
                 if (m_SplashScreen.IsDone())
                 {
-                    SetCurrentState(GameState.MainMenu);
+                    SetCurrentState(GameState.Game);
                 }
 
                 m_LockPlayersInput = true;
@@ -320,6 +320,8 @@ public class GameManager : MonoBehaviour
         }
 
     }
+
+
 
 
 }
