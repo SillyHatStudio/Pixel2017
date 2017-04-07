@@ -30,7 +30,7 @@ public class ExitCube : CubeBehaviour {
         m_Visual.layer = LayerMask.NameToLayer("Exit");
        // m_IsFlippable = false;
 
-        GetComponent<BoxCollider2D>().isTrigger = true;
+        //GetComponent<BoxCollider2D>().isTrigger = true;
     }
 
     // Update is called once per frame

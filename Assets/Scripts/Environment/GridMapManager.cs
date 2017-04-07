@@ -79,6 +79,7 @@ public class GridMapManager : MonoBehaviour
         {
             //Change value for any and 2 players validation if set to something else
             m_WinZones[0].playerAllowed = WinZone.AllowedPlayer.Any;
+           
 
             Vector2 coordinates = m_WinZones[0].position;
             var exitCube = cubegrid[(int)coordinates.x, (int)coordinates.y].GetComponent<ExitCube>();
@@ -86,6 +87,7 @@ public class GridMapManager : MonoBehaviour
             exitCube.m_PlayersThatCanGoInside = ExitCube.PlayerAuthorized.Any;
             exitCube.m_NumberOfPlayersRequiredInside = 2;
             exitCube.SetMaterialColor(Color.green);
+            exitCube.gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
         }
 
         else if (m_WinZones.Length > 1)
@@ -98,8 +100,9 @@ public class GridMapManager : MonoBehaviour
                 exitCube.MapManager = gameObject;
                 exitCube.m_NumberOfPlayersRequiredInside = 1;
                 exitCube.SetMaterialColor(Color.green); //tmp
-                
-                if(m_WinZones[i].playerAllowed == WinZone.AllowedPlayer.Any)
+                exitCube.gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
+
+                if (m_WinZones[i].playerAllowed == WinZone.AllowedPlayer.Any)
                 {
                     exitCube.m_PlayersThatCanGoInside = ExitCube.PlayerAuthorized.Any;
                 }
