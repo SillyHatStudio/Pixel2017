@@ -20,6 +20,9 @@ public class CubeBehaviour : MonoBehaviour
     protected bool m_animationInProgress;
     public TimerManager flipTimer;
 
+    [HideInInspector]
+    public GameObject MapManager;
+
     protected virtual void Awake()
     {
         m_OwnerNumber = EnumTypes.PlayerEnum.Unassigned;

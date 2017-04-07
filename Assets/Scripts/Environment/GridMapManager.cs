@@ -87,6 +87,7 @@ public class GridMapManager : MonoBehaviour
             exitCube.m_PlayersThatCanGoInside = ExitCube.PlayerAuthorized.Any;
             exitCube.m_NumberOfPlayersRequiredInside = 2;
             exitCube.SetMaterialColor(Color.green);
+            exitCube.MapManager = gameObject;
             exitCube.gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
         }
 
@@ -100,6 +101,7 @@ public class GridMapManager : MonoBehaviour
                 exitCube.MapManager = gameObject;
                 exitCube.m_NumberOfPlayersRequiredInside = 1;
                 exitCube.SetMaterialColor(Color.green); //tmp
+                exitCube.MapManager = gameObject;
                 exitCube.gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
 
                 if (m_WinZones[i].playerAllowed == WinZone.AllowedPlayer.Any)
@@ -134,10 +136,17 @@ public class GridMapManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        var anyZoneWithAPlayer = m_CubesList.Any(c => c.GetComponent<ExitCube>() != null && c.GetComponent<ExitCube>().enabled && c.GetComponent<ExitCube>().validated);
 
+        if (anyZoneWithAPlayer)
+        {
+            Debug.Log("There are player(s) in a zone");
+            CheckAllPlayersAreInWinZones();
+        }
+        
     }
 
-    private void AllPlayersAreInWinZones()
+    public void CheckAllPlayersAreInWinZones()
     {
         var winZones = m_CubesList.Where(c => c.GetComponent<ExitCube>() != null && c.GetComponent<ExitCube>().enabled);
 
@@ -147,7 +156,7 @@ public class GridMapManager : MonoBehaviour
         {
             if (winZones.First().GetComponent<ExitCube>().validated)
             {
-                Debug.Log("victory (1 winzone validated)");
+                Debug.Log("victory (the winzone is valid)");
             }
         }
 
