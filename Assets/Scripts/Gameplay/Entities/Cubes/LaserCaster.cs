@@ -72,19 +72,21 @@ public class LaserCaster : MonoBehaviour
         m_LineRenderer.SetPosition(0, beginPoint);
 
 
-        //Check for any obstacles between the caster and the wall
-        RaycastHit2D hit = Physics2D.Raycast(currentPosition + m_LaserDirection * (transform.localScale.x / 2f), m_LaserDirection, m_MaxProjectionDistance);
+        RaycastHit hitPlayerTest;
+        if (Physics.Raycast(currentPosition + m_LaserDirection * (transform.localScale.x / 2f), m_LaserDirection, out hitPlayerTest))
+        {
+            if (hitPlayerTest.collider.gameObject.tag.Equals("Player"))
+            {
+                Debug.Log("Hit player");
+                GameManager.GetInstance().ThrowGameOver();
+            }
+        }
+
+            //Check for any obstacles between the caster and the wall
+            RaycastHit2D hit = Physics2D.Raycast(currentPosition + m_LaserDirection * (transform.localScale.x / 2f), m_LaserDirection, m_MaxProjectionDistance);
         if (hit)
         {
-            if (hit.collider.gameObject.tag.Equals("Player"))
-            {
-                //TODO when a player is touched by laser => gameover
-
-                GameManager.GetInstance().ThrowGameOver();
-
-            }
-
-            else if(hit.collider.gameObject.tag.Equals("Obstacle"))
+            if (hit.collider.gameObject.tag.Equals("Obstacle"))
             {
                 if (hit.collider.gameObject != m_LastHitObject || m_LastHitObject == null)
                 {

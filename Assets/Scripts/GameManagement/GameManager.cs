@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] m_PlayerAnimationList;
 
     public GameObject StageManager;
-    private int m_CurrentMap;
+    private int m_CurrentMap = 4;
    
     void Awake()
     {
@@ -84,7 +84,6 @@ public class GameManager : MonoBehaviour
                                 {
                                     player.GetComponent<Player>().lockPlayer = false;
                                 }
-                                m_CurrentMap = 0;
                                 SetCurrentState(GameState.Game);
                             }
                            
