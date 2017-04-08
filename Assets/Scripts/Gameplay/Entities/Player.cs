@@ -28,6 +28,16 @@ public class Player : Entity
     private Vector2 m_SightLineEnd;
     private Vector2 m_PlayerToCrossHair;
 
+    //ANIMATION
+    private bool m_Moving, m_Attacking;
+    public Animator m_Animator;
+
+    //Attack Var..
+    public float m_AttackTime = .5f;
+    public float m_ChargingAttack = 0.1f;
+
+
+
     protected virtual void Awake()
     {
         m_PlayerNumber = EnumTypes.PlayerEnum.Unassigned;
@@ -37,6 +47,8 @@ public class Player : Entity
         m_SightLineRenderer.endWidth = sightLineWidth;
         m_SightLineRenderer.startColor = sightLineColor;
         m_SightLineRenderer.endColor = sightLineColor;
+        m_Animator.SetBool("Moving", m_Moving);
+        m_Animator.SetBool("Attacking", m_Attacking);
 
 
     }
@@ -51,8 +63,14 @@ public class Player : Entity
         Control();
         BumpingCooldowmUpdate();
         CheckTypeOfFloorObject();
+        Animation();
     }
 
+    private void Animation()
+    {
+        m_Animator.SetBool("Moving", m_Moving);
+        m_Animator.SetBool("Attacking", m_Attacking);
+    }
     private void BumpingCooldowmUpdate()
     {
         if (m_BumpingMinimumTimer > 0)
@@ -69,13 +87,16 @@ public class Player : Entity
 
     private void Control()
     {
-        if (Device.LeftStick.Vector != Vector2.zero)
+        if (Device.LeftStick.Vector != Vector2.zero && !m_Attacking)
         {
-            m_Rigidbody.velocity = Device.LeftStick.Vector * Time.deltaTime * Speed;
+            m_Rigidbody.velocity = Device.LeftStick.Vector * Time.deltaTime * Speed;          
+            transform.eulerAngles = new Vector3(0, 0, -Device.LeftStick.Angle);
+            m_Moving = true;
         }
         else
         {
             m_Rigidbody.velocity = m_Rigidbody.velocity *= .8f;
+            m_Moving = false;
         }
 
         if (Device.RightStick.Vector != Vector2.zero && m_BumpingMinimumTimer == 0)
@@ -83,6 +104,7 @@ public class Player : Entity
             m_BumpingMinimumTimer = m_BumpingMinimumTime;
 
             float angle = Device.RightStick.Angle;
+            
 
             CheckLineOfSight();
             if (angle >= 315 || angle < 45)
@@ -103,10 +125,31 @@ public class Player : Entity
             }
         }
 
-        if (Device.RightTrigger.WasPressed)//hit trigger and cast a cross on the game
-        {
-            CastCross();
+        if (Device.RightTrigger.WasPressed && !m_Attacking)//hit trigger and cast a cross on the game
+        {            
+            m_Attacking = true;
+            StartCoroutine(StartAttack(m_AttackTime, m_CrossHair.transform.position));
+            StartCoroutine(ChargeTime(m_ChargingAttack, m_CrossHair.transform.position));
         }
+    }
+
+
+
+
+    private IEnumerator ChargeTime(float _chargingTimeBeforeShooting, Vector3 _targetPosition)
+    {
+        yield return new WaitForSeconds(_chargingTimeBeforeShooting);
+        GameObject ball = PoolManager.instance.GetPoolObject("Projectile");
+        ball.transform.position = transform.position + Vector3.up;
+        int id = (m_PlayerNumber == EnumTypes.PlayerEnum.P1) ? 0 : 1;
+        ball.GetComponent<Projectile>().Shoot(ball.transform.position, _targetPosition, m_AttackTime - m_ChargingAttack, id);
+
+    }
+    private IEnumerator StartAttack(float _cooldownTime, Vector3 _targetPosition)
+    {
+        yield return new WaitForSeconds(_cooldownTime);
+        CastCross(_targetPosition);
+        m_Attacking = false;
     }
 
     private void CheckLineOfSight()
@@ -154,6 +197,12 @@ public class Player : Entity
         }
     }
 
+    private void UpdateWatchingDirection(float _angle)
+    {
+        m_Visual.transform.eulerAngles = new Vector3(m_Visual.transform.eulerAngles.x, m_Visual.transform.eulerAngles.y, _angle);
+
+    }
+
     private void CheckTypeOfFloorObject()
     {
         Collider2D[] colBelow = Physics2D.OverlapPointAll(gameObject.transform.position);
@@ -183,13 +232,13 @@ public class Player : Entity
         }
     }
 
-    private void CastCross()
+    private void CastCross(Vector3 _position)
     {
-        CastBox(m_CrossHair.transform.position);
-        CastBox(m_CrossHair.transform.position + Vector3.up);
-        CastBox(m_CrossHair.transform.position + Vector3.left);
-        CastBox(m_CrossHair.transform.position + Vector3.down);
-        CastBox(m_CrossHair.transform.position + Vector3.right);
+        CastBox(_position);
+        CastBox(_position + Vector3.up);
+        CastBox(_position + Vector3.left);
+        CastBox(_position + Vector3.down);
+        CastBox(_position + Vector3.right);
     }
 
     private void CastBox(Vector2 _position)

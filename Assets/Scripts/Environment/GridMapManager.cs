@@ -80,11 +80,11 @@ public class GridMapManager : MonoBehaviour
         {
             //Change value for any and 2 players validation if set to something else
             m_WinZones[0].playerAllowed = WinZone.AllowedPlayer.Any;
-           
+
 
             Vector2 coordinates = m_WinZones[0].position;
-            int x = (int)coordinates.x-1;
-            int y = (int)coordinates.y-1;
+            int x = (int)coordinates.x - 1;
+            int y = (int)coordinates.y - 1;
 
 
             var exitCube = cubegrid[x, y].GetComponent<ExitCube>();
@@ -100,30 +100,38 @@ public class GridMapManager : MonoBehaviour
         {
             for (int i = 0; i < m_WinZones.Length; i++)
             {
+
                 Vector2 coordinates = m_WinZones[i].position;
-                int x = (int)coordinates.x - (int)transform.position.x;
-                int y = (int)coordinates.y - (int)transform.position.y;
-                var exitCube = cubegrid[x, y].GetComponent<ExitCube>();
-                exitCube.enabled = true;
-                exitCube.MapManager = gameObject;
-                exitCube.m_NumberOfPlayersRequiredInside = 1;
-                exitCube.SetMaterialColor(Color.green); //tmp
-                exitCube.gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
+                int x = (int)coordinates.x;
+                int y = (int)coordinates.y;
 
-                if (m_WinZones[i].playerAllowed == WinZone.AllowedPlayer.Any)
+                if (x <= width - 1 && y <= height - 1)
                 {
-                    exitCube.m_PlayersThatCanGoInside = ExitCube.PlayerAuthorized.Any;
+                    var exitCube = cubegrid[x, y].GetComponent<ExitCube>();
+                    exitCube.enabled = true;
+                    exitCube.MapManager = gameObject;
+                    exitCube.m_NumberOfPlayersRequiredInside = 1;
+                    exitCube.SetMaterialColor(Color.green); //tmp
+                    exitCube.gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
+
+                    if (m_WinZones[i].playerAllowed == WinZone.AllowedPlayer.Any)
+                    {
+                        exitCube.m_PlayersThatCanGoInside = ExitCube.PlayerAuthorized.Any;
+                    }
+
+                    else if (m_WinZones[i].playerAllowed == WinZone.AllowedPlayer.P1)
+                    {
+                        exitCube.m_PlayersThatCanGoInside = ExitCube.PlayerAuthorized.P1;
+                    }
+
+                    else if (m_WinZones[i].playerAllowed == WinZone.AllowedPlayer.P2)
+                    {
+                        exitCube.m_PlayersThatCanGoInside = ExitCube.PlayerAuthorized.P2;
+                    }
                 }
 
-                else if (m_WinZones[i].playerAllowed == WinZone.AllowedPlayer.P1)
-                {
-                    exitCube.m_PlayersThatCanGoInside = ExitCube.PlayerAuthorized.P1;
-                }
+                else Debug.Log("invalid xy");
 
-                else if(m_WinZones[i].playerAllowed == WinZone.AllowedPlayer.P2)
-                {
-                    exitCube.m_PlayersThatCanGoInside = ExitCube.PlayerAuthorized.P2;
-                }
             }
         }
     }
@@ -141,11 +149,11 @@ public class GridMapManager : MonoBehaviour
                 }
             }
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Debug.Log(e);
         }
-        
+
     }
 
     // Update is called once per frame
@@ -158,7 +166,7 @@ public class GridMapManager : MonoBehaviour
             Debug.Log("There are player(s) in a zone");
             CheckAllPlayersAreInWinZones();
         }
-        
+
     }
 
     public void CheckAllPlayersAreInWinZones()

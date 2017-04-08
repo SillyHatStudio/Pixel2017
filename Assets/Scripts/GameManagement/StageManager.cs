@@ -9,7 +9,7 @@ public class StageManager : MonoBehaviour
     [System.Serializable]
     public struct CameraSettings
     {
-        public Vector2 startPosition;
+        public Vector3 startPosition;
         public Vector3 startRotation;
         public bool scrolling;
         public float movementSpeed;
@@ -138,6 +138,7 @@ public class StageManager : MonoBehaviour
         {
             var p = GameManager.GetInstance().GetPlayerAt(i);
             p.transform.position = spawnPoints.ElementAt(i);
+            p.GetComponent<Player>().m_CrossHair.transform.position = p.transform.position;
         }
     }
 }

@@ -81,7 +81,7 @@ public class LaserCaster : MonoBehaviour
                 //TODO when a player is touched by laser kill him
             }
 
-            else
+            else if(hit.collider.gameObject.tag.Equals("Obstacle"))
             {
                 if (hit.collider.gameObject != m_LastHitObject || m_LastHitObject == null)
                 {
@@ -112,6 +112,11 @@ public class LaserCaster : MonoBehaviour
 
                 m_EndPosition = beginPoint + m_CasterToTargetProject;
 
+            }
+
+            else
+            {
+                m_EndPosition = (Vector2)transform.position + m_LaserDirection * m_MaxProjectionDistance;
             }
         }
 
