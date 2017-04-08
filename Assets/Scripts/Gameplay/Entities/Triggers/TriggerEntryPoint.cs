@@ -29,7 +29,12 @@ public abstract class TriggerEntryPoint : MonoBehaviour, ITriggerEntryPoint {
 
     public virtual bool CheckAllButtonsValid()
     {
-        return m_LinkedButtons.All(btn => btn.m_Validated);
+        if(m_LinkedButtons.All(btn => btn.m_Validated)){
+            Debug.Log("All buttons validated for object : " + gameObject.name);
+            return true;
+        }
+
+        return false;
     }
 
     public virtual void LockAllButtons()

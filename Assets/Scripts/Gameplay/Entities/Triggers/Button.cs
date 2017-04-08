@@ -76,7 +76,6 @@ public class Button : MonoBehaviour
                     {
                         if (triggerableObj.GetComponent<ITriggerEntryPoint>().CheckAllButtonsValid())
                         {
-                            Debug.Log("All buttons are valid !");
                             triggerableObj.GetComponent<ITriggerEntryPoint>().TriggerAction();
                             triggerableObj.GetComponent<ITriggerEntryPoint>().LockAllButtons();
                         }
