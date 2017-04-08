@@ -42,9 +42,9 @@ public class GridMapManager : MonoBehaviour
     public void InitGridObjects()
     {
         //Fill grid
-        for (int i = (int)transform.position.x; i < width; i++)
+        for (int i = 0; i < width; i++)
         {
-            for (int j = (int)transform.position.y; j < height; j++)
+            for (int j = 0; j < height; j++)
             {
                 if (PoolManager.instance)
                 {
