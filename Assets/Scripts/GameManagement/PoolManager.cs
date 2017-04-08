@@ -78,6 +78,7 @@ public class PoolManager : MonoBehaviour
 
 	public GameObject GetPoolObject(string _name)
 	{
+        Debug.Log("getting object " + _name);
 		GameObject poolObject = null;
 		for(int i = 0; i< m_PoolInfoList.Length; i++)
 		{

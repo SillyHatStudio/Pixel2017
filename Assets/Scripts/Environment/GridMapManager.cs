@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,7 +10,6 @@ public class GridMapManager : MonoBehaviour
     public int width;
     public int height;
     private int defaultWidth = 12, defaultHeight = 10;
-    public GameObject MapCubePrefab;
 
     [HideInInspector]
     public GameObject[,] cubegrid;
@@ -20,9 +20,6 @@ public class GridMapManager : MonoBehaviour
 
     private void Awake()
     {
-        if (transform.position.x != 0 && transform.position.y != 0)
-            transform.position = new Vector2(0, 0);
-
         if (width <= 0)
             width = defaultWidth;
 
@@ -36,25 +33,29 @@ public class GridMapManager : MonoBehaviour
     // Update is called once per frame
     private void Start()
     {
+
+        //PlacePlayerSpawnPoints();
+
+        //PlaceWinZones();
+    }
+
+    public void InitGridObjects()
+    {
         //Fill grid
         for (int i = (int)transform.position.x; i < width; i++)
         {
             for (int j = (int)transform.position.y; j < height; j++)
             {
-                if (PoolManager.instance && MapCubePrefab)
+                if (PoolManager.instance)
                 {
                     //Place a cube on x,y
-                    GameObject cube = PoolManager.instance.GetPoolObject(MapCubePrefab.name);
+                    GameObject cube = PoolManager.instance.GetPoolObject("MapCube");
                     cube.transform.position = new Vector2(i, j);
                     cubegrid[i, j] = cube;
                     m_CubesList.Add(cube);
                 }
             }
         }
-
-        PlacePlayerSpawnPoints();
-
-        PlaceWinZones();
     }
 
     public void PlacePlayerSpawnPoints()
@@ -82,7 +83,11 @@ public class GridMapManager : MonoBehaviour
            
 
             Vector2 coordinates = m_WinZones[0].position;
-            var exitCube = cubegrid[(int)coordinates.x, (int)coordinates.y].GetComponent<ExitCube>();
+            int x = (int)coordinates.x;
+            int y = (int)coordinates.y;
+
+
+            var exitCube = cubegrid[x, y].GetComponent<ExitCube>();
             exitCube.enabled = true;
             exitCube.m_PlayersThatCanGoInside = ExitCube.PlayerAuthorized.Any;
             exitCube.m_NumberOfPlayersRequiredInside = 2;
@@ -96,7 +101,9 @@ public class GridMapManager : MonoBehaviour
             for (int i = 0; i < m_WinZones.Length; i++)
             {
                 Vector2 coordinates = m_WinZones[i].position;
-                var exitCube = cubegrid[(int)coordinates.x, (int)coordinates.y].GetComponent<ExitCube>();
+                int x = (int)coordinates.x;
+                int y = (int)coordinates.y;
+                var exitCube = cubegrid[x, y].GetComponent<ExitCube>();
                 exitCube.enabled = true;
                 exitCube.MapManager = gameObject;
                 exitCube.m_NumberOfPlayersRequiredInside = 1;
@@ -123,13 +130,22 @@ public class GridMapManager : MonoBehaviour
 
     private void FillSpawnPointColor(int _initX, int _initY, int _playerSpawnPointIndex, Color _color)
     {
-        for (int i = 0; i < m_PlayerSpawnPoint[_playerSpawnPointIndex].size.x; i++)
+        try
         {
-            for (int j = 0; j < m_PlayerSpawnPoint[_playerSpawnPointIndex].size.y; j++)
+            for (int i = 0; i < m_PlayerSpawnPoint[_playerSpawnPointIndex].size.x; i++)
             {
-                cubegrid[_initX + i, _initY + j].GetComponent<CubeBehaviour>().SetMaterialColor(_color);
+                for (int j = 0; j < m_PlayerSpawnPoint[_playerSpawnPointIndex].size.y; j++)
+                {
+                    if (cubegrid[_initX + i, _initY + j].GetComponent<CubeBehaviour>())
+                        cubegrid[_initX + i, _initY + j].GetComponent<CubeBehaviour>().SetMaterialColor(_color);
+                }
             }
         }
+        catch(Exception e)
+        {
+            Debug.Log(e);
+        }
+        
     }
 
     // Update is called once per frame

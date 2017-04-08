@@ -58,6 +58,28 @@ public class EnumTypes
         //public static int Pacman = 0;
         //public static int Ghost = 1;
     }
+
+    [System.Serializable]
+    public struct PlayerSpawnPoint
+    {
+        public Vector2 position;
+        public Vector2 size;
+        public int owner;
+    }
+
+    [System.Serializable]
+    public struct WinZone
+    {
+        public Vector2 position;
+        public AllowedPlayer playerAllowed;
+
+        public enum AllowedPlayer
+        {
+            Any,
+            P1,
+            P2
+        }
+    }
 }
 
 
