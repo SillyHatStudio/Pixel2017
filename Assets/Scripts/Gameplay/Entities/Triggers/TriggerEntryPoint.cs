@@ -6,7 +6,7 @@ using UnityEngine;
 
 public abstract class TriggerEntryPoint : MonoBehaviour, ITriggerEntryPoint {
 
-    [HideInInspector]
+    
     public List<Button> m_LinkedButtons;
 
     void Awake()

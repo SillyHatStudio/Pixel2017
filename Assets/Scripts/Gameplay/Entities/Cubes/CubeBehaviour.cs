@@ -163,8 +163,19 @@ public class CubeBehaviour : MonoBehaviour
     {
         if (!m_IsFlippable)
             return;
-        Color col = (_playerId == 0) ? Color.black : Color.white;
 
+
+        Color col = Color.gray;
+        if(_playerId== 0)
+        {
+            col = Color.black;
+        }
+        else if(_playerId == 1)
+        {
+            col = Color.white;
+        }
+        
+            
 
         //m_Material.color = col;
 
@@ -184,6 +195,7 @@ public class CubeBehaviour : MonoBehaviour
         else if (col == Color.gray)
         {
             gameObject.layer = LayerMask.NameToLayer("Grey");
+            m_Visual.transform.eulerAngles = new Vector3(0,90,0);
             m_CubeSate = CubeState.Grey;
             SetFlip();
         }

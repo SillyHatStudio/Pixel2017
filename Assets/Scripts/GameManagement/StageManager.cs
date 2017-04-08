@@ -66,7 +66,7 @@ public class StageManager : MonoBehaviour
     public List<Vector2> spawnPoints;
 
 
-    private void Awake()
+    private void Start()
     {
         if(GameManager.GetInstance())
             GameManager.GetInstance().StageManager = gameObject;
@@ -138,7 +138,11 @@ public class StageManager : MonoBehaviour
         {
             var p = GameManager.GetInstance().GetPlayerAt(i);
             p.transform.position = spawnPoints.ElementAt(i);
-            p.GetComponent<Player>().m_CrossHair.transform.position = p.transform.position;
+            p.GetComponent<Player>().m_CrossHair.transform.position = p.transform.position + new Vector3(0,0,.6f);
+            if(p.GetComponent<Player>().m_CrossHair.transform.position.x % 1 != 0)
+            {
+                p.GetComponent<Player>().m_CrossHair.transform.position += new Vector3(.5f, .5f);
+            }
         }
     }
 }

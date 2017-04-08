@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     private List<Player> m_players = new List<Player>(MAX_PLAYERS__);
     public GameObject m_PlayerPrefab;
     bool m_LockPlayersInput = true;
+    public int m_LeveltoLoad = 1;
 
     public int m_NumberOfRound = 4;
 
@@ -155,9 +156,9 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameState.Game:
-                {   
-                    SceneManager.LoadScene(2 +1);
-                   
+                {
+                    LoadNextScene();
+
                 }
                 break;
         }
@@ -323,7 +324,25 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void LoadNextScene()
+    {
 
+        if (m_LeveltoLoad != 1)
+        {
+            PoolManager.instance.DeloadAll();
+        }
+        SceneManager.LoadScene(m_LeveltoLoad + 1);
+        m_LeveltoLoad++;
+    }
 
-
+    public void LoadCurrentLevel()
+    {        
+        PoolManager.instance.DeloadAll();       
+        SceneManager.LoadScene(m_LeveltoLoad + 1);        
+    }
 }
+
+
+
+
+

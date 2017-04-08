@@ -111,4 +111,39 @@ public class PoolManager : MonoBehaviour
 
 
 
+    public void DeloadAll()
+    {
+
+
+        //foreach(Transform child in gameObject.transform)
+        //{
+        //    if(child.gameObject.GetComponent<CubeBehaviour>())
+        //    {
+        //        child.gameObject.GetComponent<CubeBehaviour>().SetMaterialColor(-1);
+        //    }
+        //    child.gameObject.SetActive(false);
+        //}
+
+        foreach(Transform child in gameObject.transform)
+        {
+
+            Destroy(child.gameObject);
+           
+        }
+
+        m_PoolInfoList = null;
+        m_PoolInfoList = new PoolInfo[m_PoolPrefabList.Length];
+        for (int i = 0; i < m_PoolPrefabList.Length; i++) //Each list
+        {
+            m_PoolInfoList[i] = new PoolInfo(m_PoolPrefabList[i].prefab.name,
+                                             m_PoolPrefabList[i].prefab,
+                                             m_PoolPrefabList[i].number,
+                                             gameObject);
+        }
+
+    }
+
+
+
+
 }

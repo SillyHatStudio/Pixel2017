@@ -68,6 +68,12 @@ public class Player : Entity
         BumpingCooldowmUpdate();
         CheckTypeOfFloorObject();
         Animation();
+
+        if(Input.GetKeyDown(KeyCode.Space) && m_PlayerNumber == EnumTypes.PlayerEnum.P1)
+        {
+
+            GameManager.GetInstance().LoadNextScene();
+        }
     }
 
     private void Animation()

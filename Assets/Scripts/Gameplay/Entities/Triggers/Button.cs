@@ -120,6 +120,14 @@ public class Button : MonoBehaviour
     // Update is called once per frame
     protected void Update()
     {
-
+        Collider2D[] col = Physics2D.OverlapPointAll(transform.position);
+        
+        for(int i = 0; i < col.Length; i++)
+        {
+            if(col[i].GetComponent<CubeBehaviour>())
+            {
+                col[i].GetComponent<CubeBehaviour>().gameObject.layer = (m_PlayerAllowed == PlayerAuthorized.P1)? LayerMask.NameToLayer("Black"): LayerMask.NameToLayer("White"); 
+            }
+        }
     }
 }

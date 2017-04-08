@@ -1,0 +1,192 @@
+fileFormatVersion: 2
+guid: 252feebe202011d4887574a2a68cc655
+timeCreated: 1491674887
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Arena_WallCorner_full006
+    100004: Arena_WallCorner_full007
+    100006: Arena_WallDouble002
+    100008: Arena_WallDouble003
+    100010: arena_WallEntry_A005
+    100012: arena_WallEntry_B006
+    100014: arena_WallEntry_B007
+    100016: arena_WallEntry_B008
+    100018: arena_WallEntry_B009
+    100020: arena_WallExitSingle004
+    100022: arena_WallExitSingle005
+    100024: arena_WallExitSingle_007
+    100026: arena_WallExitSingle_008
+    100028: arena_WallExitSingle_009
+    100030: arena_WallExitSingle_010
+    100032: arena_WallRelief_A015
+    100034: arena_WallRelief_B013
+    100036: arena_WallRelief_B014
+    100038: arena_WallRelief_B015
+    100040: arena_WallRelief_B016
+    100042: arena_WallRelief_B017
+    100044: arena_WallRelief_B018
+    100046: Arena_WallSingle018
+    400000: //RootNode
+    400002: Arena_WallCorner_full006
+    400004: Arena_WallCorner_full007
+    400006: Arena_WallDouble002
+    400008: Arena_WallDouble003
+    400010: arena_WallEntry_A005
+    400012: arena_WallEntry_B006
+    400014: arena_WallEntry_B007
+    400016: arena_WallEntry_B008
+    400018: arena_WallEntry_B009
+    400020: arena_WallExitSingle004
+    400022: arena_WallExitSingle005
+    400024: arena_WallExitSingle_007
+    400026: arena_WallExitSingle_008
+    400028: arena_WallExitSingle_009
+    400030: arena_WallExitSingle_010
+    400032: arena_WallRelief_A015
+    400034: arena_WallRelief_B013
+    400036: arena_WallRelief_B014
+    400038: arena_WallRelief_B015
+    400040: arena_WallRelief_B016
+    400042: arena_WallRelief_B017
+    400044: arena_WallRelief_B018
+    400046: Arena_WallSingle018
+    2300000: Arena_WallCorner_full006
+    2300002: Arena_WallCorner_full007
+    2300004: Arena_WallDouble002
+    2300006: Arena_WallDouble003
+    2300008: arena_WallEntry_A005
+    2300010: arena_WallEntry_B006
+    2300012: arena_WallEntry_B007
+    2300014: arena_WallEntry_B008
+    2300016: arena_WallEntry_B009
+    2300018: arena_WallExitSingle004
+    2300020: arena_WallExitSingle005
+    2300022: arena_WallExitSingle_007
+    2300024: arena_WallExitSingle_008
+    2300026: arena_WallExitSingle_009
+    2300028: arena_WallExitSingle_010
+    2300030: arena_WallRelief_A015
+    2300032: arena_WallRelief_B013
+    2300034: arena_WallRelief_B014
+    2300036: arena_WallRelief_B015
+    2300038: arena_WallRelief_B016
+    2300040: arena_WallRelief_B017
+    2300042: arena_WallRelief_B018
+    2300044: Arena_WallSingle018
+    3300000: Arena_WallCorner_full006
+    3300002: Arena_WallCorner_full007
+    3300004: Arena_WallDouble002
+    3300006: Arena_WallDouble003
+    3300008: arena_WallEntry_A005
+    3300010: arena_WallEntry_B006
+    3300012: arena_WallEntry_B007
+    3300014: arena_WallEntry_B008
+    3300016: arena_WallEntry_B009
+    3300018: arena_WallExitSingle004
+    3300020: arena_WallExitSingle005
+    3300022: arena_WallExitSingle_007
+    3300024: arena_WallExitSingle_008
+    3300026: arena_WallExitSingle_009
+    3300028: arena_WallExitSingle_010
+    3300030: arena_WallRelief_A015
+    3300032: arena_WallRelief_B013
+    3300034: arena_WallRelief_B014
+    3300036: arena_WallRelief_B015
+    3300038: arena_WallRelief_B016
+    3300040: arena_WallRelief_B017
+    3300042: arena_WallRelief_B018
+    3300044: Arena_WallSingle018
+    4300000: Arena_WallCorner_full006
+    4300002: Arena_WallCorner_full007
+    4300004: Arena_WallDouble002
+    4300006: Arena_WallDouble003
+    4300008: arena_WallEntry_A005
+    4300010: arena_WallEntry_B006
+    4300012: arena_WallEntry_B007
+    4300014: arena_WallEntry_B008
+    4300016: arena_WallEntry_B009
+    4300018: arena_WallExitSingle004
+    4300020: arena_WallExitSingle005
+    4300022: arena_WallExitSingle_007
+    4300024: arena_WallExitSingle_008
+    4300026: arena_WallExitSingle_009
+    4300028: arena_WallExitSingle_010
+    4300030: arena_WallRelief_A015
+    4300032: arena_WallRelief_B013
+    4300034: arena_WallRelief_B014
+    4300036: arena_WallRelief_B015
+    4300038: arena_WallRelief_B016
+    4300040: arena_WallRelief_B017
+    4300042: arena_WallRelief_B018
+    4300044: Arena_WallSingle018
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

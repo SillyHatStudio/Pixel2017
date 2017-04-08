@@ -108,6 +108,7 @@ public class GridMapManager : MonoBehaviour
                 if (x <= width - 1 && y <= height - 1)
                 {
                     var exitCube = cubegrid[x, y].GetComponent<ExitCube>();
+                    cubegrid[x, y].name = "ExitTest";
                     exitCube.enabled = true;
                     exitCube.MapManager = gameObject;
                     exitCube.m_NumberOfPlayersRequiredInside = 1;
@@ -174,12 +175,15 @@ public class GridMapManager : MonoBehaviour
         var winZones = m_CubesList.Where(c => c.GetComponent<ExitCube>() != null && c.GetComponent<ExitCube>().enabled);
 
         Debug.Log("win zones count = " + winZones.Count());
+       
 
         if (winZones.Count() == 1)
         {
             if (winZones.First().GetComponent<ExitCube>().validated)
             {
                 Debug.Log("victory (the winzone is valid)");
+                GameManager.GetInstance().LoadNextScene();
+
             }
         }
 
@@ -187,7 +191,13 @@ public class GridMapManager : MonoBehaviour
         {
             var validWinZones = winZones.Where(c => c.GetComponent<ExitCube>().validated);
 
-            if (validWinZones.Count() == winZones.Count()) Debug.Log("All zones are valid");
+            if (validWinZones.Count() == winZones.Count())
+            {
+                Debug.Log("All zones are valid");
+                
+
+            }   
+
         }
     }
 

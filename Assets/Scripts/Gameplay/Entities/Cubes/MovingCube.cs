@@ -12,7 +12,7 @@ public class MovingCube : CubeBehaviour
     public bool m_LoopMovement;
     private Vector3 m_Direction;
     private bool m_Going = true;
-
+    private int m_PlayerId = -1;
 
    //Startposition, movedistance, speed, loop
 
@@ -67,6 +67,34 @@ public class MovingCube : CubeBehaviour
     protected override void Update()
     {
         //base.Update();
+        Vector2 topLeft = new Vector2(transform.position.x + .7f, transform.position.y + .4f);
+        Vector2 botRight = new Vector2(transform.position.x - .7f, transform.position.y - .4f);
+
+        Collider2D[] col = Physics2D.OverlapAreaAll(topLeft, botRight);
+        bool havePlayer = false;
+        for(int i = 0; i < col.Length; i++)
+        {            
+
+            col[i].gameObject.layer = gameObject.layer;
+
+            if (col[i].GetComponent<Player>())
+            {
+                col[i].gameObject.transform.parent = gameObject.transform;
+                havePlayer = true;
+            }
+        }
+
+        if(!havePlayer)
+        {
+            for(int i = 0; i < gameObject.transform.childCount; i++)
+            {
+                if(gameObject.transform.GetChild(i).GetComponent<Player>())
+                {
+                    gameObject.transform.GetChild(i).gameObject.transform.parent = null;
+                }
+            }
+        }
+        
 
 
         if (m_LoopMovement)
