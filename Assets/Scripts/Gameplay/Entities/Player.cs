@@ -40,7 +40,7 @@ public class Player : Entity
 
     protected virtual void Awake()
     {
-        //m_PlayerNumber = EnumTypes.PlayerEnum.Unassigned;
+        m_PlayerNumber = EnumTypes.PlayerEnum.Unassigned;
         m_Rigidbody = GetComponent<Rigidbody2D>();
         m_SightLineRenderer = GetComponent<LineRenderer>();
         m_SightLineRenderer.startWidth = sightLineWidth;
@@ -60,7 +60,7 @@ public class Player : Entity
 
     void Update()
     {
-        //Control();
+        Control();
         BumpingCooldowmUpdate();
         CheckTypeOfFloorObject();
         Animation();
