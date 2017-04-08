@@ -60,7 +60,7 @@ public class MovingCube : CubeBehaviour
 
         if (m_LoopMovement)
         {
-            transform.position = Vector3.Lerp(m_StartPosition, m_EndPosition, Mathf.SmoothStep(0f, 1f, Mathf.PingPong(Time.time / m_MovementSpeed, 1f)));
+            transform.position = Vector3.Lerp(m_StartPosition, m_EndPosition, Mathf.SmoothStep(0f, 1f, Mathf.PingPong(Time.time * m_MovementSpeed, 1f)));
         }
 
         else

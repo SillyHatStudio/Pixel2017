@@ -68,7 +68,8 @@ public class StageManager : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.GetInstance().StageManager = gameObject;
+        if(GameManager.GetInstance())
+            GameManager.GetInstance().StageManager = gameObject;
 
         //Camera config
         Camera.main.transform.position = cameraSettings.startPosition;

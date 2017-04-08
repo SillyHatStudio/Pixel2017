@@ -53,9 +53,6 @@ public class LaserCaster : MonoBehaviour
         {
             m_LaserDirection = Vector2.down;
         }
-
-        if (parentWall)
-            m_LastHitObject = parentWall;
     }
 
     // Use this for initialization
@@ -86,14 +83,13 @@ public class LaserCaster : MonoBehaviour
 
             else
             {
-                if (hit.collider.gameObject != m_LastHitObject)
+                if (hit.collider.gameObject != m_LastHitObject || m_LastHitObject == null)
                 {
                     var newTarget = hit.collider.gameObject;
                     Debug.Log("New object hit : " + newTarget.name);
 
                     m_LastHitObject = newTarget;
                 }
-
 
                 float halfScale = m_LastHitObject.transform.localScale.x / 2f;
 
