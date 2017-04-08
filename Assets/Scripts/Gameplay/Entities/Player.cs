@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class Player : Entity
 {
     public InputDevice Device { get; set; }
-    private EnumTypes.PlayerEnum m_PlayerNumber;
+    public EnumTypes.PlayerEnum m_PlayerNumber;
     private Rigidbody2D m_Rigidbody;
     public float Speed;
 
@@ -40,7 +40,7 @@ public class Player : Entity
 
     protected virtual void Awake()
     {
-        m_PlayerNumber = EnumTypes.PlayerEnum.Unassigned;
+        //m_PlayerNumber = EnumTypes.PlayerEnum.Unassigned;
         m_Rigidbody = GetComponent<Rigidbody2D>();
         m_SightLineRenderer = GetComponent<LineRenderer>();
         m_SightLineRenderer.startWidth = sightLineWidth;
@@ -60,7 +60,7 @@ public class Player : Entity
 
     void Update()
     {
-        Control();
+        //Control();
         BumpingCooldowmUpdate();
         CheckTypeOfFloorObject();
         Animation();

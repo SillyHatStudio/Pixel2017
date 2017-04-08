@@ -83,6 +83,4 @@ public class ExitCube : CubeBehaviour {
                 validated = false;
         }
     }
-
-
 }
