@@ -44,6 +44,10 @@ public class Projectile : MonoBehaviour
                 explosion.transform.position = transform.position;
                 explosion.GetComponent<ParticleSystem>().startColor = (m_PlayerId == 0) ? Color.white : Color.black;
                 m_ExplosionDone = true;
+                if (explosion.GetComponent<BallExplosionAutoDisable>())
+                {
+                    explosion.GetComponent<BallExplosionAutoDisable>().m_AnimationFinished = true;
+                }
             }
 
 
