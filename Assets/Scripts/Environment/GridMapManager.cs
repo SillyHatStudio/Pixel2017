@@ -41,7 +41,7 @@ public class GridMapManager : MonoBehaviour
         {
             for (int j = (int)transform.position.y; j < height; j++)
             {
-                if (MapCubePrefab)
+                if (PoolManager.instance && MapCubePrefab)
                 {
                     //Place a cube on x,y
                     GameObject cube = PoolManager.instance.GetPoolObject(MapCubePrefab.name);

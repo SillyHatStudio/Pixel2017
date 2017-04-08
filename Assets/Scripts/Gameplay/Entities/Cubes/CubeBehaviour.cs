@@ -28,9 +28,12 @@ public class CubeBehaviour : MonoBehaviour
         m_OwnerNumber = EnumTypes.PlayerEnum.Unassigned;
         m_CurrentColor = Color.gray;
 
-        m_Material = m_Visual.GetComponent<MeshRenderer>().material;
-        m_Material.color = Color.gray;
-
+        if (m_Visual)
+        {
+            m_Material = m_Visual.GetComponent<MeshRenderer>().material;
+            m_Material.color = Color.gray;
+        }
+        
         if(m_IsFlippable)
         {
             m_IsTimingForFlip = false;
