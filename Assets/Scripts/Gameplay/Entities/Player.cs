@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class Player : Entity
 {
     public InputDevice Device { get; set; }
-    public EnumTypes.PlayerEnum m_PlayerNumber;
+    private EnumTypes.PlayerEnum m_PlayerNumber;
     private Rigidbody2D m_Rigidbody;
     public float Speed;
 

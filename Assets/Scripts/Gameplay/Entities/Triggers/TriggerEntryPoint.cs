@@ -6,11 +6,13 @@ using UnityEngine;
 
 public abstract class TriggerEntryPoint : MonoBehaviour, ITriggerEntryPoint {
 
+    [HideInInspector]
     public List<Button> m_LinkedButtons;
 
     void Awake()
     {
-        m_LinkedButtons = new List<Button>();
+        if(m_LinkedButtons == null)
+            m_LinkedButtons = new List<Button>();
     }
 
     // Use this for initialization
@@ -18,19 +20,19 @@ public abstract class TriggerEntryPoint : MonoBehaviour, ITriggerEntryPoint {
 		
 	}
 
-    public void RegisterButton(Button btn)
+    public virtual void RegisterButton(Button btn)
     {
         m_LinkedButtons.Add(btn);
     }
 
-    public virtual void TriggerAction() { }
+    public abstract void TriggerAction();
 
-    public bool CheckAllButtonsValid()
+    public virtual bool CheckAllButtonsValid()
     {
         return m_LinkedButtons.All(btn => btn.m_Validated);
     }
 
-    public void LockAllButtons()
+    public virtual void LockAllButtons()
     {
         foreach(var btn in m_LinkedButtons)
         {
