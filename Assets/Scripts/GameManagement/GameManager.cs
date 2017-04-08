@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour
 
             case GameState.Game:
                 {   
-                    SceneManager.LoadScene(4);
+                    SceneManager.LoadScene(2 +1);
                    
                 }
                 break;
