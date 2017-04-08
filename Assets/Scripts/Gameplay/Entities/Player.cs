@@ -11,6 +11,9 @@ public class Player : Entity
     private EnumTypes.PlayerEnum m_PlayerNumber;
     private Rigidbody2D m_Rigidbody;
     public float Speed;
+    public SkinnedMeshRenderer m_MatRef;
+    public Material m_WhiteRef;
+
 
     //ref
     public GameObject m_Visual;
@@ -299,13 +302,14 @@ public class Player : Entity
             case 0:
                 m_PlayerNumber = EnumTypes.PlayerEnum.P1;
                 m_Visual.GetComponent<MeshRenderer>().material.color = Color.black;
-                m_Visual.layer = LayerMask.NameToLayer("Black");
+                gameObject.layer = LayerMask.NameToLayer("Black");
                 break;
 
             case 1:
                 m_PlayerNumber = EnumTypes.PlayerEnum.P2;
                 m_Visual.GetComponent<MeshRenderer>().material.color = Color.white;
-                m_Visual.layer = LayerMask.NameToLayer("White");
+                gameObject.layer = LayerMask.NameToLayer("White");
+                m_MatRef.material = m_WhiteRef;
                 break;
         }
     }
