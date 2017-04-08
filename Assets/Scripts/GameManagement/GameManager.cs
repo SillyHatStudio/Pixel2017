@@ -80,8 +80,11 @@ public class GameManager : MonoBehaviour
                         case 0: //if button 0  
                             if(GameManager.GetInstance().GetCurrentPlayerCount() == 2)
                             {                               
+                                foreach (var player in m_players)
+                                {
+                                    player.GetComponent<Player>().lockPlayer = false;
+                                }
                                 SetCurrentState(GameState.Game);
-
                             }
                            
                             break;
@@ -115,6 +118,8 @@ public class GameManager : MonoBehaviour
                 break;
         }
     }
+
+   
 
     public void PerformRippleEffect(Vector3 wpos)
     {
@@ -156,9 +161,9 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameState.Game:
-                {
-                    LoadNextScene();
-
+                {   
+                    SceneManager.LoadScene(2 +1);
+                   
                 }
                 break;
         }
