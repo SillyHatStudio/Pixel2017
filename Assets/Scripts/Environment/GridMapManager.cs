@@ -20,8 +20,8 @@ public class GridMapManager : MonoBehaviour
 
     private void Awake()
     {
-        if (transform.position.x != 0 && transform.position.y != 0)
-            transform.position = new Vector2(0, 0);
+        //if (transform.position.x != 0 && transform.position.y != 0)
+        //    transform.position = new Vector2(0, 0);
 
         if (width <= 0)
             width = defaultWidth;
@@ -37,15 +37,15 @@ public class GridMapManager : MonoBehaviour
     private void Start()
     {
         //Fill grid
-        for (int i = (int)transform.position.x; i < width; i++)
+        for (int i = 0; i < width; i++)
         {
-            for (int j = (int)transform.position.y; j < height; j++)
+            for (int j = 0; j < height; j++)
             {
                 if (MapCubePrefab)
                 {
                     //Place a cube on x,y
                     GameObject cube = PoolManager.instance.GetPoolObject(MapCubePrefab.name);
-                    cube.transform.position = new Vector2(i, j);
+                    cube.transform.position = new Vector2(i+transform.position.x, j+transform.position.y);
                     cubegrid[i, j] = cube;
                     m_CubesList.Add(cube);
                 }

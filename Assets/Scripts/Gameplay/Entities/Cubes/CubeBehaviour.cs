@@ -8,38 +8,29 @@ public class CubeBehaviour : MonoBehaviour
 {
 
     private EnumTypes.PlayerEnum m_OwnerNumber;
-    private Color m_CurrentColor;
-    private Material m_Material;
     public GameObject m_Visual;
     public bool m_CanColor = true;
 
-    [Range(1, 59)]
-    public int timeBetweenFlips;
-    public bool m_IsFlippable;
-    protected bool m_IsTimingForFlip;
-    protected bool m_animationInProgress;
-    public TimerManager flipTimer;
+    public bool m_IsFlippable = true;
+    public CubeState m_CubeSate = CubeState.Grey;
+    private float m_TargetAngle;
+    private float m_FlipSpeed = 720f;
+
+
 
     [HideInInspector]
     public GameObject MapManager;
 
     protected virtual void Awake()
     {
-        m_OwnerNumber = EnumTypes.PlayerEnum.Unassigned;
-        m_CurrentColor = Color.gray;
+        m_OwnerNumber = EnumTypes.PlayerEnum.Unassigned;      
 
-        m_Material = m_Visual.GetComponent<MeshRenderer>().material;
-        m_Material.color = Color.gray;
 
-        if(m_IsFlippable)
-        {
-            m_IsTimingForFlip = false;
+             
+        m_CubeSate = CubeState.Grey;
+        gameObject.layer = LayerMask.NameToLayer("Grey");  
+        m_IsFlippable = true;
 
-            if (flipTimer)
-            {
-                flipTimer.m_timerType = EnumTypes.TimerTypeEnum.Countdown;
-            }
-        }
     }
 
     // Use this for initialization
@@ -48,71 +39,90 @@ public class CubeBehaviour : MonoBehaviour
 
     }
 
+
+
+
     // Update is called once per frame
     protected virtual void Update()
     {
-        if(m_IsFlippable)
-        {
-            if(m_IsTimingForFlip)
-            {
-                //If the timer is over and we are waiting to flip, do it
-                if (flipTimer.remainingSecs == 0)
-                {
-                    Flip();
-                }
-            }
-        } 
-    }
+        Flip();
+    } 
 
-    //Called when the object got painted by a player
-    //Cases : no player on it : flip and set timer
-    //Has a player above it : flip, set timer + bump the player
-    public void GotPaintedCallback()
+    private void Flip()
     {
-        if (m_IsFlippable)
-        {
-            //TODO check if player on it
+        if(transform.eulerAngles.z != m_TargetAngle)
+        {           
+            if(m_TargetAngle != m_Visual.transform.eulerAngles.z)
+            {               
+                if(m_TargetAngle > m_Visual.transform.eulerAngles.z)
+                {
+                    m_Visual.transform.eulerAngles += new Vector3(0, 0, Time.deltaTime * m_FlipSpeed);
+                    if(m_Visual.transform.eulerAngles.z >= m_TargetAngle)
+                    {
+                        m_Visual.transform.eulerAngles = new Vector3(m_Visual.transform.eulerAngles.x, m_Visual.transform.eulerAngles.y, m_TargetAngle);
+                        m_IsFlippable = true;
+                    }
+                }
+                else if(m_TargetAngle < m_Visual.transform.eulerAngles.z)
+                {
+                    m_Visual.transform.eulerAngles -= new Vector3(0, 0, Time.deltaTime * m_FlipSpeed);
+                    if (m_Visual.transform.eulerAngles.z <= m_TargetAngle)
+                    {
+                        m_Visual.transform.eulerAngles = new Vector3(m_Visual.transform.eulerAngles.x, m_Visual.transform.eulerAngles.y, m_TargetAngle);
+                        m_IsFlippable = true;
+                    }
+                } 
+            }
+        }
 
-            Flip();
+        if(m_TargetAngle == m_Visual.transform.eulerAngles.z)
+        {
+            m_IsFlippable = true;
         }
     }
 
-    public void Flip()
+    private void SetFlip()
     {
-        m_IsTimingForFlip = false;
-        m_animationInProgress = true;
-
-        //Todo : rotation over time to show the right face
-
-        m_animationInProgress = false;
-        flipTimer.resetTimer();
+        if(m_IsFlippable)
+        {
+            m_IsFlippable = false;
+            switch (m_CubeSate)
+            {
+                case CubeState.Grey:
+                    m_TargetAngle = 0;
+                    break;
+                case CubeState.Black:
+                    m_TargetAngle = 240;
+                    break;
+                case CubeState.White:
+                    m_TargetAngle = 120;
+                    break;
+                case CubeState.None:
+                    print("your mom");
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
-
-    private IEnumerator Wait(float time)
-    {
-        yield return new WaitForSeconds(time);
-    }
 
     void SetOwner(int ownerNumber)
     {
         switch (ownerNumber)
         {
             case 0:
-                m_OwnerNumber = EnumTypes.PlayerEnum.P1;
-                m_CurrentColor = EnumTypes.PlayerColors.ColorP1;
+                m_OwnerNumber = EnumTypes.PlayerEnum.P1;              
                 SetMaterialColor(EnumTypes.PlayerColors.ColorP1);
                 break;
 
             case 1:
-                m_OwnerNumber = EnumTypes.PlayerEnum.P2;
-                m_CurrentColor = EnumTypes.PlayerColors.ColorP2;
+                m_OwnerNumber = EnumTypes.PlayerEnum.P2;             
                 SetMaterialColor(EnumTypes.PlayerColors.ColorP2);
                 break;
 
             default:
-                m_OwnerNumber = EnumTypes.PlayerEnum.Unassigned;
-                m_CurrentColor = EnumTypes.PlayerColors.ColorNone;
+                m_OwnerNumber = EnumTypes.PlayerEnum.Unassigned;              
                 SetMaterialColor(EnumTypes.PlayerColors.ColorNone);
                 break;
         }
@@ -120,42 +130,68 @@ public class CubeBehaviour : MonoBehaviour
 
     public void SetMaterialColor(Color color)
     {
-        m_Material.color = color;
+        if (!m_IsFlippable)
+            return;
 
         if (color == Color.black)
         {
             gameObject.layer = LayerMask.NameToLayer("Black");
+            m_CubeSate = CubeState.Black;
+            SetFlip();
         }
         else if (color == Color.white)
         {
             gameObject.layer = LayerMask.NameToLayer("White");
+            m_CubeSate = CubeState.White;
+            SetFlip();
         }
 
         else if (color == Color.gray)
         {
             gameObject.layer = LayerMask.NameToLayer("Grey");
+            m_CubeSate = CubeState.Grey;
+            SetFlip();
         }
     }
 
     public void SetMaterialColor(int _playerId)
     {
+        if (!m_IsFlippable)
+            return;
         Color col = (_playerId == 0) ? Color.black : Color.white;
 
 
-        m_Material.color = col;
+        //m_Material.color = col;
 
         if (col == Color.black)
         {
             gameObject.layer = LayerMask.NameToLayer("Black");
+            m_CubeSate = CubeState.Black;
+            SetFlip();
+
         }
         else if (col == Color.white)
         {
             gameObject.layer = LayerMask.NameToLayer("White");
+            m_CubeSate = CubeState.White;
+            SetFlip();
         }
         else if (col == Color.gray)
         {
             gameObject.layer = LayerMask.NameToLayer("Grey");
+            m_CubeSate = CubeState.Grey;
+            SetFlip();
         }
 
     }
+
+
+    public enum CubeState
+    {
+        Grey,
+        Black,
+        White,
+        None
+    }
+
 }

@@ -24,7 +24,7 @@ public class ExitCube : CubeBehaviour {
         base.Awake();
         m_CanColor = false;
         m_CurrentNumberOfPlayersInside = 0;
-        m_Visual.layer = LayerMask.NameToLayer("Exit");
+        //m_Visual.layer = LayerMask.NameToLayer("Exit");
        // m_IsFlippable = false;
 
         //GetComponent<BoxCollider2D>().isTrigger = true;

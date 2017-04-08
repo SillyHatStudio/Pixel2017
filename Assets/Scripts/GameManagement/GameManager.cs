@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour
 
             case GameState.Game:
                 {   
-                    SceneManager.LoadScene(1);
+                    SceneManager.LoadScene(4);
                     SpawnPlayersAtPosition();
                 }
                 break;
