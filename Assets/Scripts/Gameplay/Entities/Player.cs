@@ -2,6 +2,7 @@
 using System.Collections;
 using InControl;
 using System.Collections.Generic;
+using System.Linq;
 
 [RequireComponent(typeof(LineRenderer))]
 public class Player : Entity
@@ -104,7 +105,7 @@ public class Player : Entity
             m_BumpingMinimumTimer = m_BumpingMinimumTime;
 
             float angle = Device.RightStick.Angle;
-            
+
 
             CheckLineOfSight();
             if (angle >= 315 || angle < 45)
@@ -126,7 +127,7 @@ public class Player : Entity
         }
 
         if (Device.RightTrigger.WasPressed && !m_Attacking)//hit trigger and cast a cross on the game
-        {            
+        {
             m_Attacking = true;
             StartCoroutine(StartAttack(m_AttackTime, m_CrossHair.transform.position));
             StartCoroutine(ChargeTime(m_ChargingAttack, m_CrossHair.transform.position));
@@ -154,28 +155,28 @@ public class Player : Entity
 
     private void CheckLineOfSight()
     {
-       /* m_PlayerToCrossHair = m_CrossHair.transform.position - transform.position;
+        /* m_PlayerToCrossHair = m_CrossHair.transform.position - transform.position;
 
-        m_SightLineRenderer.SetPosition(0, (Vector2)transform.position);
+         m_SightLineRenderer.SetPosition(0, (Vector2)transform.position);
 
-        Debug.DrawLine((Vector2)transform.position, m_CrossHair.transform.position, Color.green, 2);
+         Debug.DrawLine((Vector2)transform.position, m_CrossHair.transform.position, Color.green, 2);
 
-        //Check for any obstacles between the caster and the wall
-        RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position, m_PlayerToCrossHair, maxSightLineDistance);
-        if (hit)
-        {
-            Debug.Log("Line of sight hit obstacle");
-            var obstacle = hit.collider.gameObject;
+         //Check for any obstacles between the caster and the wall
+         RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position, m_PlayerToCrossHair, maxSightLineDistance);
+         if (hit)
+         {
+             Debug.Log("Line of sight hit obstacle");
+             var obstacle = hit.collider.gameObject;
 
-            var pointVec = new Vector2(hit.point.x, hit.point.y);
-            Debug.DrawRay((Vector2)transform.position, pointVec - (Vector2)transform.position, Color.red, 2);
+             var pointVec = new Vector2(hit.point.x, hit.point.y);
+             Debug.DrawRay((Vector2)transform.position, pointVec - (Vector2)transform.position, Color.red, 2);
 
-            m_SightLineRenderer.SetPosition(1, pointVec);
-        }
-        else
-        {
-            Debug.DrawRay((Vector2)transform.position, m_PlayerToCrossHair, Color.blue, 2);
-        } */
+             m_SightLineRenderer.SetPosition(1, pointVec);
+         }
+         else
+         {
+             Debug.DrawRay((Vector2)transform.position, m_PlayerToCrossHair, Color.blue, 2);
+         } */
     }
 
     //Do a raycast to a possible position to teleport the object to location
@@ -183,17 +184,18 @@ public class Player : Entity
     {
         Collider2D[] collider = Physics2D.OverlapPointAll(_position);
 
-        for (int i = 0; i < collider.Length; i++)
+        if (collider.Length > 0)
         {
-            if (collider[i].GetComponent<CubeBehaviour>())
+            if (collider.Count(col => col.gameObject.tag == "Wall") == 0)
             {
-                m_CrossHair.transform.position = collider[i].transform.position;
-
+                m_CrossHair.transform.position = new Vector3(_position.x, _position.y, m_CrossHair.transform.position.z);
             }
-            else
-            {
+        }
 
-            }
+        //can Move on top of empty zones
+        else if (collider.Length == 0)
+        {
+            m_CrossHair.transform.position = new Vector3(_position.x, _position.y, m_CrossHair.transform.position.z);
         }
     }
 
