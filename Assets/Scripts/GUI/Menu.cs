@@ -9,10 +9,12 @@ public class Menu : MonoBehaviour
     ////////////////////////////////////////////////////////////////////////////////
     /*----------------------------------------------------------------------------*/
     public FadeOverlay m_FadeOverlay;
+    public GameObject m_PressStartLabel;
     public GameObject m_Button0;
     public GameObject m_Button1;
     public GameObject m_Arrow;  
-    public GameObject m_P1Ready, m_P2Ready; 
+    public GameObject m_P1Ready, m_P2Ready;
+    public GameObject m_MenuSelection;
 
     public bool m_StartMenuOpen = true;
 
@@ -27,6 +29,8 @@ public class Menu : MonoBehaviour
 	void Start ()
     {
         m_Arrow.SetActive(false);
+        m_PressStartLabel.SetActive(true);
+        m_MenuSelection.SetActive(false);
 
         m_ButtonIndex = 0;
         m_SelectIndex = -1;
@@ -56,6 +60,9 @@ public class Menu : MonoBehaviour
             if(GameManager.GetInstance().GetCurrentPlayerCount() > 1)
             {
                 m_P2Ready.gameObject.SetActive(true);
+                m_MenuSelection.SetActive(true);
+                m_Arrow.SetActive(true);
+                m_PressStartLabel.SetActive(false);
             }
         }
 		
@@ -64,8 +71,11 @@ public class Menu : MonoBehaviour
         if (m_PlayerReady && m_FadeOverlay.m_PerformFadeOut == false)
         {
             Player active = GameManager.GetInstance().GetPlayerAt(0);
+
+            
+
             if (active.Device.DPadUp.WasPressed)
-            {                
+            {
                 if (m_ButtonIndex != 0) {
                     m_ButtonIndex--;
                 }
@@ -111,8 +121,6 @@ public class Menu : MonoBehaviour
                 }  	
                 m_SelectIndex = m_ButtonIndex;
             }
-
-            m_Arrow.SetActive(true);
         }
     }
    
