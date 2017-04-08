@@ -11,6 +11,9 @@ public class ScrollingCamera : MonoBehaviour
     public MovementDirection m_MovementDirection;
     public float m_distanceToMove;
 
+    private float m_DistanceTraveled;
+
+
     [HideInInspector]
     public enum MovementDirection
     {
@@ -54,6 +57,7 @@ public class ScrollingCamera : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        transform.position = Vector3.Lerp(m_StartPosition, m_EndPosition, Mathf.SmoothStep(0f, 1f, Time.time / 2 * m_MovementSpeed));
+        transform.position += new Vector3(m_MovementSpeed * Time.deltaTime, 0, 0);
+        
     }
 }
