@@ -78,7 +78,7 @@ public class LaserCaster : MonoBehaviour
             if (hitPlayerTest.collider.gameObject.tag.Equals("Player"))
             {
                 Debug.Log("Hit player");
-                GameManager.GetInstance().ThrowGameOver();
+                GameManager.GetInstance().LoadCurrentLevel();
             }
         }
 

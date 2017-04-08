@@ -188,7 +188,7 @@ public class Menu : MonoBehaviour
             {
                 if (m_ButtonIndex == 0)
                 {
-                    GameManager.GetInstance().LoadNextMap();
+                    GameManager.GetInstance().LoadCurrentLevel();
                 }
 
                 else if (m_ButtonIndex == 0)
