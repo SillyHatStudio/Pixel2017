@@ -14,7 +14,6 @@ public class Player : Entity
     public SkinnedMeshRenderer m_MatRef;
     public Material m_WhiteRef;
 
-
     //ref
     public GameObject m_Visual;
     public GameObject m_CrossHair;
@@ -40,7 +39,7 @@ public class Player : Entity
     public float m_AttackTime = .5f;
     public float m_ChargingAttack = 0.1f;
 
-
+    public bool lockPlayer = false;
 
     protected virtual void Awake()
     {
@@ -64,9 +63,12 @@ public class Player : Entity
 
     void Update()
     {
-        Control();
-        BumpingCooldowmUpdate();
-        CheckTypeOfFloorObject();
+        if(!lockPlayer)
+        {
+            Control();
+            BumpingCooldowmUpdate();
+            CheckTypeOfFloorObject();
+        }
         Animation();
     }
 

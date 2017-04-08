@@ -78,7 +78,10 @@ public class LaserCaster : MonoBehaviour
         {
             if (hit.collider.gameObject.tag.Equals("Player"))
             {
-                //TODO when a player is touched by laser kill him
+                //TODO when a player is touched by laser => gameover
+
+                GameManager.GetInstance().ThrowGameOver();
+
             }
 
             else if(hit.collider.gameObject.tag.Equals("Obstacle"))

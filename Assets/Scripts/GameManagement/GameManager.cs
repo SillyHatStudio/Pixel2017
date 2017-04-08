@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] m_PlayerAnimationList;
 
     public GameObject StageManager;
+    private int m_CurrentMap;
    
     void Awake()
     {
@@ -78,9 +79,13 @@ public class GameManager : MonoBehaviour
                     {
                         case 0: //if button 0  
                             if(GameManager.GetInstance().GetCurrentPlayerCount() == 2)
-                            {                               
+                            {
+                                foreach (var player in m_players)
+                                {
+                                    player.GetComponent<Player>().lockPlayer = false;
+                                }
+                                m_CurrentMap = 0;
                                 SetCurrentState(GameState.Game);
-
                             }
                            
                             break;
@@ -113,6 +118,21 @@ public class GameManager : MonoBehaviour
                 SetCurrentState(GameState.SplashScreen);
                 break;
         }
+    }
+
+    public void LoadNextMap()
+    {
+
+    }
+
+    public void ThrowGameOver()
+    {
+        foreach(var player in m_players)
+        {
+            player.GetComponent<Player>().lockPlayer = true;
+        }
+
+        m_Menu.m_IsGameOver = true;
     }
 
     public void PerformRippleEffect(Vector3 wpos)
@@ -156,7 +176,7 @@ public class GameManager : MonoBehaviour
 
             case GameState.Game:
                 {   
-                    SceneManager.LoadScene(2 +1);
+                    SceneManager.LoadScene(m_CurrentMap);
                    
                 }
                 break;
