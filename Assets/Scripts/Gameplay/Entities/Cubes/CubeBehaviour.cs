@@ -15,8 +15,7 @@ public class CubeBehaviour : MonoBehaviour
     public CubeState m_CubeSate = CubeState.Grey;
     private float m_TargetAngle;
     private float m_FlipSpeed = 720f;
-
-
+    public bool m_Movable;
 
     [HideInInspector]
     public GameObject MapManager;
@@ -30,6 +29,12 @@ public class CubeBehaviour : MonoBehaviour
         m_CubeSate = CubeState.Grey;
         gameObject.layer = LayerMask.NameToLayer("Grey");  
         m_IsFlippable = true;
+
+        if (m_Movable)
+        {
+            if(GetComponent<MovingCube>())
+                GetComponent<MovingCube>().enabled = true;
+        }
 
     }
 

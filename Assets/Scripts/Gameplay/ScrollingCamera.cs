@@ -6,7 +6,7 @@ public class ScrollingCamera : MonoBehaviour
 {
 
     private Vector2 m_StartPosition, m_EndPosition;
-    public float m_MovementSpeed;
+    public float m_MovementSpeed = 1f;
     private bool m_isMoving;
     public MovementDirection m_MovementDirection;
     public float m_distanceToMove;

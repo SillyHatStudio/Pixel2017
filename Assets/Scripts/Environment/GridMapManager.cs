@@ -50,7 +50,7 @@ public class GridMapManager : MonoBehaviour
                 {
                     //Place a cube on x,y
                     GameObject cube = PoolManager.instance.GetPoolObject("MapCube");
-                    cube.transform.position = new Vector2(i, j);
+                    cube.transform.position = new Vector2(transform.position.x + i, transform.position.y + j);
                     cubegrid[i, j] = cube;
                     m_CubesList.Add(cube);
                 }
@@ -83,8 +83,8 @@ public class GridMapManager : MonoBehaviour
            
 
             Vector2 coordinates = m_WinZones[0].position;
-            int x = (int)coordinates.x;
-            int y = (int)coordinates.y;
+            int x = (int)coordinates.x-1;
+            int y = (int)coordinates.y-1;
 
 
             var exitCube = cubegrid[x, y].GetComponent<ExitCube>();
@@ -101,8 +101,8 @@ public class GridMapManager : MonoBehaviour
             for (int i = 0; i < m_WinZones.Length; i++)
             {
                 Vector2 coordinates = m_WinZones[i].position;
-                int x = (int)coordinates.x;
-                int y = (int)coordinates.y;
+                int x = (int)coordinates.x - (int)transform.position.x;
+                int y = (int)coordinates.y - (int)transform.position.y;
                 var exitCube = cubegrid[x, y].GetComponent<ExitCube>();
                 exitCube.enabled = true;
                 exitCube.MapManager = gameObject;

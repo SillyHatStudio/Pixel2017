@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
 
     //for animation
     public GameObject[] m_PlayerAnimationList;
+
+    public GameObject StageManager;
    
     void Awake()
     {

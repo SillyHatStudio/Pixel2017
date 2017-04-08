@@ -55,7 +55,16 @@ public class PoolManager : MonoBehaviour
         else
         {
 			Debug.LogError("PoolManager already exists!");
-        } 
+        }
+
+        m_PoolInfoList = new PoolInfo[m_PoolPrefabList.Length];
+        for (int i = 0; i < m_PoolPrefabList.Length; i++) //Each list
+        {
+            m_PoolInfoList[i] = new PoolInfo(m_PoolPrefabList[i].prefab.name,
+                                             m_PoolPrefabList[i].prefab,
+                                             m_PoolPrefabList[i].number,
+                                             gameObject);
+        }
     }
 
 	bool InitGame()
@@ -65,20 +74,12 @@ public class PoolManager : MonoBehaviour
 
 	void Start()
 	{
-		m_PoolInfoList = new PoolInfo[m_PoolPrefabList.Length];
-		for(int i = 0; i < m_PoolPrefabList.Length; i++) //Each list
-		{
-			m_PoolInfoList[i] = new PoolInfo(m_PoolPrefabList[i].prefab.name,
-											 m_PoolPrefabList[i].prefab, 
-											 m_PoolPrefabList[i].number,
-											 gameObject);
-		}
+		
 	}
 
 
 	public GameObject GetPoolObject(string _name)
 	{
-        Debug.Log("getting object " + _name);
 		GameObject poolObject = null;
 		for(int i = 0; i< m_PoolInfoList.Length; i++)
 		{
