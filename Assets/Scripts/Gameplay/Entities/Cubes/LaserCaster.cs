@@ -72,16 +72,6 @@ public class LaserCaster : MonoBehaviour
         m_LineRenderer.SetPosition(0, beginPoint);
 
 
-        RaycastHit hitPlayerTest;
-        if (Physics.Raycast(currentPosition + m_LaserDirection * (transform.localScale.x / 2f), m_LaserDirection, out hitPlayerTest))
-        {
-            if (hitPlayerTest.collider.gameObject.tag.Equals("Player"))
-            {
-                Debug.Log("Hit player");
-                GameManager.GetInstance().LoadCurrentLevel();
-            }
-        }
-
             //Check for any obstacles between the caster and the wall
             RaycastHit2D hit = Physics2D.Raycast(currentPosition + m_LaserDirection * (transform.localScale.x / 2f), m_LaserDirection, m_MaxProjectionDistance);
         if (hit)
@@ -122,6 +112,16 @@ public class LaserCaster : MonoBehaviour
             else
             {
                 m_EndPosition = (Vector2)transform.position + m_LaserDirection * m_MaxProjectionDistance;
+
+                RaycastHit hitPlayerTest;
+                if (Physics.Raycast(currentPosition + m_LaserDirection * (transform.localScale.x / 2f), m_LaserDirection, out hitPlayerTest))
+                {
+                    if (hitPlayerTest.collider.gameObject.tag.Equals("Player"))
+                    {
+                        Debug.Log("Hit player");
+                        GameManager.GetInstance().LoadCurrentLevel();
+                    }
+                }
             }
         }
 

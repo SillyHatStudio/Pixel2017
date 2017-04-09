@@ -28,7 +28,7 @@ public class SoundManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("SoundManager already exists!");
+            //Debug.LogError("SoundManager already exists!");
         }
     }
 

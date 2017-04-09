@@ -162,7 +162,9 @@ public class GameManager : MonoBehaviour
 
             case GameState.Game:
                 {
+                    SoundManager.SPEAKER.PlayMusic("Music");
                     LoadNextScene();
+                   
 
                 }
                 break;
