@@ -2,7 +2,7 @@
 
 Pixel Challenge 2017
 
-![menu game](Assets/Screenshots/UI_Menu-Main.jpg)
+![menu game](Assets/Screenshots/UI_Menu-Main.png)
 
 ##Description
 
